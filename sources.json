@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "sam-erde",
+      "title": "Sam Erde PowerShell",
+      "summary": "AD Entra Exchange Windows PowerShell 参考候補",
+      "url": "https://github.com/SamErde/PowerShell",
+      "license_note": "MIT text located at .github/LICENSE; check individual provenance before adoption."
+    },
+    {
+      "id": "pnp",
+      "title": "PnP Script Samples",
+      "summary": "M365 SharePoint Teams Graph CLI 実務サンプル",
+      "url": "https://github.com/pnp/script-samples",
+      "license_note": "Review source LICENSE and per-sample attribution before adoption."
+    },
+    {
+      "id": "azure-samples",
+      "title": "Azure PowerShell documentation samples",
+      "summary": "Azure Az PowerShell リソース管理 公式サンプル",
+      "url": "https://github.com/Azure-Samples/azure-docs-powershell-samples",
+      "license_note": "MIT in LICENSE.md; educational samples require validation."
+    },
+    {
+      "id": "azure-management",
+      "title": "Existing AzureManagement",
+      "summary": "Azure Windows Terraform ARM コスト 既存資産",
+      "url": "https://github.com/ebibibi/AzureManagement",
+      "license_note": "Existing owner repository; review individual files before migration."
+    },
+    {
+      "id": "m365dsc",
+      "title": "Microsoft365DSC",
+      "summary": "M365 configuration extraction 構成抽出 差分",
+      "url": "https://github.com/Microsoft365DSC/Microsoft365DSC",
+      "license_note": "Prefer using as a dependency; review version and license before adopting code."
+    }
+  ]
+}

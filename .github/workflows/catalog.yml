@@ -1,0 +1,22 @@
+name: Toolkit checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    # Do not execute arbitrary fork code on an owner's self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test catalogue and evidence rules offline
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate catalogue and evidence references
+        run: python3 tools/toolkit.py validate
