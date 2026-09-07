@@ -1,0 +1,19 @@
+{
+  "entry_id": "find-oldusers",
+  "date": "2026-09-07",
+  "scope": "review",
+  "outcome": "passed",
+  "artifacts": {
+    "ActiveDirectory/Find-OldObjects/Find-OldUsers.ps1": "96ee18afd8ebafbc81bb997c4c0c409e64b688f4bd56bcf6752cbfa00c5a6f79",
+    "ActiveDirectory/Find-OldObjects/README.md": "9339bfe7996a3f082443a1e95ef742fb3728c6e44fea8c5dc9302bb5663c8d97"
+  },
+  "runtime": "Static source review; no PowerShell execution or AD connection.",
+  "procedure": "Read the filter, exclusion pattern and returned fields in Find-OldUsers.ps1.",
+  "expected": "Identify input assumptions and boundaries of the stale-user candidate list.",
+  "observed": "Uses replicated lastLogonTimestamp and fixed name exclusions; does not query per-DC lastLogon.",
+  "limitations": [
+    "Review only; no live-domain validation.",
+    "Missing logon history and DC query completeness are not established.",
+    "Output is not authorization to disable or delete accounts."
+  ]
+}

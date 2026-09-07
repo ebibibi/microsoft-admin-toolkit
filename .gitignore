@@ -2,3 +2,7 @@ Exchange/セカンダリアドレスの追加/mailaddresses.txt
 All/output/*
 CLAUDE.md
 .claude/*
+
+__pycache__/
+.ruff_cache/
+*.pyc
