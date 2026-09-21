@@ -1,0 +1,21 @@
+{
+  "entry_id": "new-graph-readonly-app",
+  "date": "2026-09-21",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "EntraID/GraphReadOnlyApp/New-GraphReadOnlyApp.sh": "a5d5082378fc62e4b47f3612f36732fa61d3410e7470c761f045c738dc8c1af5",
+    "EntraID/GraphReadOnlyApp/README.md": "121dd239692a604880e0c2b8e1d2bf101e010d78d7e1c8f07293bbfa8202c33b",
+    "tests/test_graph_readonly_app.py": "15d03d332bd798349f00935382357175b41f9529cd4c0b73219cacbdd3704775"
+  },
+  "runtime": "Ubuntu (Linux 5.15), bash 5.x, python 3.12, azure-cli installed. Offline unit tests run with python3 -m unittest; the dry-run was executed against a live tenant using an existing Azure CLI login.",
+  "procedure": "1. bash -n on the script. 2. python3 -m unittest tests.test_graph_readonly_app (6 cases: syntax, missing arguments, missing certificate file, ReadWrite refusal, FullControl refusal, and that a Read permission whose name contains 'Management' is not refused). 3. Run the script with --dry-run against a signed-in tenant and confirm it resolves the tenant and identity and lists the default permission set without making a change.",
+  "expected": "Argument validation and the write-permission filter reject bad input before any directory call. The default permission set is read-only and passes the filter. --dry-run makes no change.",
+  "observed": "All six offline cases passed. --dry-run printed the tenant id, signed-in identity and 12 permissions, and exited 0 without creating anything. An earlier revision of the filter used a '*Manage*' glob, which wrongly rejected DeviceManagementManagedDevices.Read.All; the regression test now covers that case.",
+  "limitations": [
+    "The apply path of this script has not been executed against a directory. The equivalent az ad app create / credential reset / appRoleAssignments calls were performed manually and succeeded, but that does not certify this script.",
+    "Re-run behaviour (reuse of an existing application and already-assigned permissions) is untested.",
+    "Failure handling when the caller lacks directory write access is untested.",
+    "No tenant identifiers are recorded here; the dry-run target is not disclosed."
+  ]
+}
