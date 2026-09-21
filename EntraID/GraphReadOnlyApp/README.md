@@ -52,6 +52,15 @@ authentication, not at a later step.
 
 Remove `--dry-run` to apply. The script prints `tenant_id` and `client_id` on success.
 
+To update an application that already exists, name it by id:
+
+```bash
+./New-GraphReadOnlyApp.sh \
+  --azure-config-dir ~/.azure-<tenant> \
+  --app-id <appId> \
+  --certificate ~/.certs/<name>.crt
+```
+
 Override the permission set with repeated `--permission` flags. The default set
 covers tenant health reporting:
 
@@ -72,13 +81,30 @@ covers tenant health reporting:
 
 ## Behaviour worth knowing
 
-- **Write permissions are refused.** Anything matching `ReadWrite`, `.Write.`,
-  `.AccessAsUser.` or `.FullControl.` exits non-zero before any change is made.
-  Write access belongs in a separate application with its own approval.
+- **Only read forms are accepted.** A permission must look like `Foo.Read`,
+  `Foo.Read.All`, `Foo.ReadBasic` or `Foo.ReadBasic.All`. Anything else exits non-zero
+  before any change is made.
+
+  This is an allowlist on purpose. A denylist of write-looking substrings does not
+  hold, because Microsoft Graph has permissions that grant write access without
+  containing `ReadWrite` or `.Write.` anywhere in the name — `Mail.Send` is the
+  obvious one. A legitimate read permission in an unusual shape has to be added to
+  the pattern deliberately.
+- **An existing application is never adopted by display name.** If an application with
+  the requested `--display-name` already exists, the run stops and prints the
+  application ids it found.
+
+  Display names are not unique in Entra ID, and in tenants where members may register
+  applications, anyone can pre-create one with the name an administrator is about to
+  use. Adopting it would attach your certificate to an application somebody else owns
+  and grant it tenant-wide read permissions with admin consent — and they could add
+  their own client secret afterwards. Verify ownership, then pass `--app-id` to target
+  it explicitly.
 - **Admin consent is granted in the same step.** Permissions are written directly as
   `appRoleAssignments` on the service principal, so there is no separate consent action.
-- **Re-running is additive.** An existing application and service principal are reused,
-  already-assigned permissions are reported as `=`, and nothing is removed.
+- **Re-running is additive.** With `--app-id`, the existing application and service
+  principal are reused, already-assigned permissions are reported as `=`, and nothing
+  is removed.
 - **Partial failure exits non-zero.** A permission that Microsoft Graph does not offer
   in the tenant is reported and fails the run rather than being skipped quietly.
 
