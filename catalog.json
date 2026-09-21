@@ -2,169 +2,9 @@
   "version": 1,
   "entries": [
     {
-      "id": "check-dnsupdateregistry",
-      "title": "Check-DnsUpdateRegistry",
-      "summary": "ActiveDirectory/DNSClient",
-      "areas": [
-        "identity",
-        "active-directory",
-        "AD"
-      ],
-      "tags": [
-        "既存",
-        "管理"
-      ],
-      "path": "ActiveDirectory/DNSClient/Check-DnsUpdateRegistry.ps1",
-      "runbook": "ActiveDirectory/DNSClient/README.md",
-      "effect": "read-only",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "find-oldcomputers",
-      "title": "Find-OldComputers",
-      "summary": "ActiveDirectory/Find-OldObjects",
-      "areas": [
-        "identity",
-        "active-directory",
-        "AD"
-      ],
-      "tags": [
-        "既存",
-        "棚卸し"
-      ],
-      "path": "ActiveDirectory/Find-OldObjects/Find-OldComputers.ps1",
-      "runbook": "ActiveDirectory/Find-OldObjects/README.md",
-      "effect": "read-only",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "find-oldusers",
-      "title": "Find-OldUsers",
-      "summary": "ActiveDirectory/Find-OldObjects",
-      "areas": [
-        "identity",
-        "active-directory",
-        "AD"
-      ],
-      "tags": [
-        "既存",
-        "棚卸し"
-      ],
-      "path": "ActiveDirectory/Find-OldObjects/Find-OldUsers.ps1",
-      "runbook": "ActiveDirectory/Find-OldObjects/README.md",
-      "effect": "read-only",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": [
-        "docs/evidence/ad-old-users-review.json"
-      ]
-    },
-    {
-      "id": "invoke-adstaleinventory",
-      "title": "Invoke-ADStaleInventory",
-      "summary": "ActiveDirectory/Invoke-ADStaleInventory",
-      "areas": [
-        "identity",
-        "active-directory",
-        "AD"
-      ],
-      "tags": [
-        "既存",
-        "棚卸し"
-      ],
-      "path": "ActiveDirectory/Invoke-ADStaleInventory/Invoke-ADStaleInventory.ps1",
-      "runbook": "ActiveDirectory/Invoke-ADStaleInventory/README.md",
-      "effect": "read-only",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "generate-m365inventoryreport",
-      "title": "Generate-M365InventoryReport",
-      "summary": "All",
-      "areas": [
-        "m365",
-        "inventory"
-      ],
-      "tags": [
-        "既存",
-        "棚卸し"
-      ],
-      "path": "All/Generate-M365InventoryReport.ps1",
-      "runbook": "All/README.md",
-      "effect": "read-only",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "setup-inventoryreportprereqs",
-      "title": "Setup-InventoryReportPrereqs",
-      "summary": "All",
-      "areas": [
-        "m365",
-        "inventory"
-      ],
-      "tags": [
-        "既存",
-        "管理"
-      ],
-      "path": "All/Setup-InventoryReportPrereqs.ps1",
-      "runbook": "All/README.md",
-      "effect": "changes-state",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "setattribute",
-      "title": "setattribute",
-      "summary": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策",
-      "areas": [
-        "identity",
-        "entra"
-      ],
-      "tags": [
-        "既存",
-        "管理"
-      ],
-      "path": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策/setattribute.ps1",
-      "runbook": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策/README.md",
-      "effect": "changes-state",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "connect-exchange",
-      "title": "Connect-Exchange",
-      "summary": "Exchange",
+      "id": "add-rightstosharedmailbox",
+      "title": "Add-RightsToSharedMailbox",
+      "summary": "Exchange/共有メールボックスへの権限付与",
       "areas": [
         "m365",
         "exchange"
@@ -173,8 +13,30 @@
         "既存",
         "管理"
       ],
-      "path": "Exchange/Connect-Exchange.ps1",
-      "runbook": "README.md",
+      "path": "Exchange/共有メールボックスへの権限付与/Add-RightsToSharedMailbox.ps1",
+      "runbook": "Exchange/共有メールボックスへの権限付与/README.md",
+      "effect": "changes-state",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "add-rightstosharedmailboxes",
+      "title": "Add-RightsToSharedMailboxes",
+      "summary": "Exchange/共有メールボックスへの権限付与",
+      "areas": [
+        "m365",
+        "exchange"
+      ],
+      "tags": [
+        "既存",
+        "管理"
+      ],
+      "path": "Exchange/共有メールボックスへの権限付与/Add-RightsToSharedMailboxes.ps1",
+      "runbook": "Exchange/共有メールボックスへの権限付与/README.md",
       "effect": "changes-state",
       "status": "legacy-unverified",
       "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
@@ -228,19 +90,20 @@
       "evidence": []
     },
     {
-      "id": "get-userinformation",
-      "title": "Get-UserInformation",
-      "summary": "Exchange/ユーザー情報を出力",
+      "id": "check-dnsupdateregistry",
+      "title": "Check-DnsUpdateRegistry",
+      "summary": "ActiveDirectory/DNSClient",
       "areas": [
-        "m365",
-        "exchange"
+        "identity",
+        "active-directory",
+        "AD"
       ],
       "tags": [
         "既存",
-        "棚卸し"
+        "管理"
       ],
-      "path": "Exchange/ユーザー情報を出力/Get-UserInformation.ps1",
-      "runbook": "Exchange/ユーザー情報を出力/README.md",
+      "path": "ActiveDirectory/DNSClient/Check-DnsUpdateRegistry.ps1",
+      "runbook": "ActiveDirectory/DNSClient/README.md",
       "effect": "read-only",
       "status": "legacy-unverified",
       "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
@@ -250,9 +113,9 @@
       "evidence": []
     },
     {
-      "id": "add-rightstosharedmailbox",
-      "title": "Add-RightsToSharedMailbox",
-      "summary": "Exchange/共有メールボックスへの権限付与",
+      "id": "connect-exchange",
+      "title": "Connect-Exchange",
+      "summary": "Exchange",
       "areas": [
         "m365",
         "exchange"
@@ -261,30 +124,8 @@
         "既存",
         "管理"
       ],
-      "path": "Exchange/共有メールボックスへの権限付与/Add-RightsToSharedMailbox.ps1",
-      "runbook": "Exchange/共有メールボックスへの権限付与/README.md",
-      "effect": "changes-state",
-      "status": "legacy-unverified",
-      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
-      "dependencies": [],
-      "tests": [],
-      "sources": [],
-      "evidence": []
-    },
-    {
-      "id": "add-rightstosharedmailboxes",
-      "title": "Add-RightsToSharedMailboxes",
-      "summary": "Exchange/共有メールボックスへの権限付与",
-      "areas": [
-        "m365",
-        "exchange"
-      ],
-      "tags": [
-        "既存",
-        "管理"
-      ],
-      "path": "Exchange/共有メールボックスへの権限付与/Add-RightsToSharedMailboxes.ps1",
-      "runbook": "Exchange/共有メールボックスへの権限付与/README.md",
+      "path": "Exchange/Connect-Exchange.ps1",
+      "runbook": "README.md",
       "effect": "changes-state",
       "status": "legacy-unverified",
       "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
@@ -352,6 +193,195 @@
       "path": "Teams/Teamチャンネル一覧およびメンバーの一覧表示/Export-TeamsMembers_IncludeChannels.ps1",
       "runbook": "Teams/Teamチャンネル一覧およびメンバーの一覧表示/README.md",
       "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "find-oldcomputers",
+      "title": "Find-OldComputers",
+      "summary": "ActiveDirectory/Find-OldObjects",
+      "areas": [
+        "identity",
+        "active-directory",
+        "AD"
+      ],
+      "tags": [
+        "既存",
+        "棚卸し"
+      ],
+      "path": "ActiveDirectory/Find-OldObjects/Find-OldComputers.ps1",
+      "runbook": "ActiveDirectory/Find-OldObjects/README.md",
+      "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "find-oldusers",
+      "title": "Find-OldUsers",
+      "summary": "ActiveDirectory/Find-OldObjects",
+      "areas": [
+        "identity",
+        "active-directory",
+        "AD"
+      ],
+      "tags": [
+        "既存",
+        "棚卸し"
+      ],
+      "path": "ActiveDirectory/Find-OldObjects/Find-OldUsers.ps1",
+      "runbook": "ActiveDirectory/Find-OldObjects/README.md",
+      "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/ad-old-users-review.json"
+      ]
+    },
+    {
+      "id": "generate-m365inventoryreport",
+      "title": "Generate-M365InventoryReport",
+      "summary": "All",
+      "areas": [
+        "m365",
+        "inventory"
+      ],
+      "tags": [
+        "既存",
+        "棚卸し"
+      ],
+      "path": "All/Generate-M365InventoryReport.ps1",
+      "runbook": "All/README.md",
+      "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "get-userinformation",
+      "title": "Get-UserInformation",
+      "summary": "Exchange/ユーザー情報を出力",
+      "areas": [
+        "m365",
+        "exchange"
+      ],
+      "tags": [
+        "既存",
+        "棚卸し"
+      ],
+      "path": "Exchange/ユーザー情報を出力/Get-UserInformation.ps1",
+      "runbook": "Exchange/ユーザー情報を出力/README.md",
+      "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "invoke-adstaleinventory",
+      "title": "Invoke-ADStaleInventory",
+      "summary": "ActiveDirectory/Invoke-ADStaleInventory",
+      "areas": [
+        "identity",
+        "active-directory",
+        "AD"
+      ],
+      "tags": [
+        "既存",
+        "棚卸し"
+      ],
+      "path": "ActiveDirectory/Invoke-ADStaleInventory/Invoke-ADStaleInventory.ps1",
+      "runbook": "ActiveDirectory/Invoke-ADStaleInventory/README.md",
+      "effect": "read-only",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "new-graph-readonly-app",
+      "title": "New-GraphReadOnlyApp",
+      "summary": "Register a certificate-backed Entra ID application with read-only Microsoft Graph permissions for unattended reporting jobs.",
+      "areas": [
+        "identity",
+        "entra-id",
+        "microsoft-graph",
+        "M365"
+      ],
+      "tags": [
+        "新規",
+        "認証",
+        "自動化",
+        "least-privilege"
+      ],
+      "path": "EntraID/GraphReadOnlyApp/New-GraphReadOnlyApp.sh",
+      "runbook": "EntraID/GraphReadOnlyApp/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Caller must be Global Administrator or Privileged Role Administrator in the target tenant. The application it creates receives read-only Microsoft Graph application permissions only; write scopes are refused before any change is made.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_graph_readonly_app.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/graph-readonly-app.json"
+      ]
+    },
+    {
+      "id": "setattribute",
+      "title": "setattribute",
+      "summary": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策",
+      "areas": [
+        "identity",
+        "entra"
+      ],
+      "tags": [
+        "既存",
+        "管理"
+      ],
+      "path": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策/setattribute.ps1",
+      "runbook": "EntraID/全てのリソースに対しての対象外の意図せぬ挙動対策/README.md",
+      "effect": "changes-state",
+      "status": "legacy-unverified",
+      "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "setup-inventoryreportprereqs",
+      "title": "Setup-InventoryReportPrereqs",
+      "summary": "All",
+      "areas": [
+        "m365",
+        "inventory"
+      ],
+      "tags": [
+        "既存",
+        "管理"
+      ],
+      "path": "All/Setup-InventoryReportPrereqs.ps1",
+      "runbook": "All/README.md",
+      "effect": "changes-state",
       "status": "legacy-unverified",
       "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
       "dependencies": [],
