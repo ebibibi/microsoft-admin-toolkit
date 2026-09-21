@@ -4,18 +4,18 @@
   "scope": "offline",
   "outcome": "passed",
   "artifacts": {
-    "EntraID/GraphReadOnlyApp/New-GraphReadOnlyApp.sh": "a5d5082378fc62e4b47f3612f36732fa61d3410e7470c761f045c738dc8c1af5",
-    "EntraID/GraphReadOnlyApp/README.md": "121dd239692a604880e0c2b8e1d2bf101e010d78d7e1c8f07293bbfa8202c33b",
-    "tests/test_graph_readonly_app.py": "15d03d332bd798349f00935382357175b41f9529cd4c0b73219cacbdd3704775"
+    "EntraID/GraphReadOnlyApp/New-GraphReadOnlyApp.sh": "1049ffdd92e875ddfcf5147824319bced4a11cfda0075139c2027eb83f64c9ac",
+    "EntraID/GraphReadOnlyApp/README.md": "9f74a3604f5c566a52738ab06e010f492f2ae11585e0f16fb9fb3cd67cdcb798",
+    "tests/test_graph_readonly_app.py": "2854406c48954d514e3177b204d1e67ca12b8e8edda3d166584027663f8281f0"
   },
-  "runtime": "Ubuntu (Linux 5.15), bash 5.x, python 3.12, azure-cli installed. Offline unit tests run with python3 -m unittest; the dry-run was executed against a live tenant using an existing Azure CLI login.",
-  "procedure": "1. bash -n on the script. 2. python3 -m unittest tests.test_graph_readonly_app (6 cases: syntax, missing arguments, missing certificate file, ReadWrite refusal, FullControl refusal, and that a Read permission whose name contains 'Management' is not refused). 3. Run the script with --dry-run against a signed-in tenant and confirm it resolves the tenant and identity and lists the default permission set without making a change.",
-  "expected": "Argument validation and the write-permission filter reject bad input before any directory call. The default permission set is read-only and passes the filter. --dry-run makes no change.",
-  "observed": "All six offline cases passed. --dry-run printed the tenant id, signed-in identity and 12 permissions, and exited 0 without creating anything. An earlier revision of the filter used a '*Manage*' glob, which wrongly rejected DeviceManagementManagedDevices.Read.All; the regression test now covers that case.",
+  "runtime": "Ubuntu (Linux 5.15), bash 5.x, python 3.12, azure-cli installed. Offline unit tests run with python3 -m unittest; dry-run and the display-name collision guard were exercised against a live tenant using an existing Azure CLI login.",
+  "procedure": "1. bash -n on the script. 2. python3 -m unittest tests.test_graph_readonly_app (9 cases: syntax, missing arguments, missing certificate file, unknown --app-id, ReadWrite refusal, FullControl refusal, Mail.Send refusal, ReadBasic acceptance, and that a Read permission whose name contains 'Management' is accepted). 3. Run with --dry-run against a signed-in tenant using an unused display name and confirm the tenant, identity and 12 default permissions are listed with no change. 4. Run WITHOUT --dry-run against the same tenant using a display name that already exists, and confirm the run stops before creating or crediting anything.",
+  "expected": "Argument and permission validation reject bad input before any directory call. Only read forms pass. An application is never adopted by display name; a collision stops the run and reports the application ids found.",
+  "observed": "All nine offline cases passed. --dry-run with an unused name listed the tenant, identity and 12 permissions and exited 0 without creating anything. The apply run against an existing display name exited 1, printed the colliding application id and the instruction to verify ownership and use --app-id, and made no change. Two weaknesses in the previous revision were the reason for this one: the write filter was a substring denylist that let Mail.Send through, and an existing application matching the display name was silently adopted and credentialed.",
   "limitations": [
-    "The apply path of this script has not been executed against a directory. The equivalent az ad app create / credential reset / appRoleAssignments calls were performed manually and succeeded, but that does not certify this script.",
-    "Re-run behaviour (reuse of an existing application and already-assigned permissions) is untested.",
+    "The create path and the --app-id update path have not been executed against a directory by this script. The equivalent az ad app create / credential reset / appRoleAssignments calls were performed manually and succeeded, but that does not certify this script.",
     "Failure handling when the caller lacks directory write access is untested.",
-    "No tenant identifiers are recorded here; the dry-run target is not disclosed."
+    "The collision guard compares display names only. It does not inspect application owners; the operator must verify ownership before passing --app-id.",
+    "No tenant identifiers are recorded here; the target tenant is not disclosed."
   ]
 }
