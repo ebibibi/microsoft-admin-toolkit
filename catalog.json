@@ -263,12 +263,14 @@
       "path": "All/Generate-M365InventoryReport.ps1",
       "runbook": "All/README.md",
       "effect": "read-only",
-      "status": "legacy-unverified",
+      "status": "experimental",
       "permissions": "Not independently verified. Read runbook and verify least privilege for the target service.",
       "dependencies": [],
       "tests": [],
       "sources": [],
-      "evidence": []
+      "evidence": [
+        "docs/evidence/m365-inventory-report-production.json"
+      ]
     },
     {
       "id": "get-userinformation",

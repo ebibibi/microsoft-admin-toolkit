@@ -1,0 +1,22 @@
+{
+  "entry_id": "generate-m365inventoryreport",
+  "date": "2026-09-30",
+  "scope": "production",
+  "outcome": "passed",
+  "artifacts": {
+    "All/Generate-M365InventoryReport.ps1": "d2f3ae76e57a75ede8cb865d6de3645797941e478e78859fe25f41588abae80b",
+    "All/README.md": "9fae7e7623ab696dc086b62957d7daa816f4967f6c2909bfa8401f9af981d25d"
+  },
+  "runtime": "Ubuntu (Linux 5.15), PowerShell 7.6.5, Microsoft.Graph 2.4.0 meta-module with Microsoft.Graph.Authentication 2.34.0 resolved on import, ExchangeOnlineManagement 3.10.0, ImportExcel not installed (CSV fallback path). Target: a small real tenant with no Microsoft 365 licences (11 members, 7 guests, 6 groups, no Teams, no mailboxes).",
+  "procedure": "1. Copy the script unchanged to a scratch directory so output stays out of the repository. 2. In one pwsh process, Import-Module Microsoft.Graph (unpinned), Connect-MgGraph -AccessToken with a delegated Graph token from an existing Azure CLI sign-in, and Connect-ExchangeOnline -AccessToken -Organization with a delegated Exchange token from the same sign-in. 3. Invoke the script with no parameters; it detects both existing sessions and skips device-code sign-in. 4. Cross-check each CSV row count against Graph $count queries (members, guests, all groups, Team-provisioned groups, mail-enabled groups) and against Get-EXOMailbox (all and SharedMailbox) in a separate session.",
+  "expected": "The script reuses the existing Graph and EXO sessions, makes only Get-* calls, exits 0, and the CSV row counts equal the directly queried counts, including zero for object types the tenant does not have.",
+  "observed": "Exit code 0 after about 5 seconds. Users 11 / Guests 7 / Groups 6 matched the Graph $count results exactly. Teams, TeamMembers, TeamOwners, SharedMailboxes, SharedMailboxPermissions, DistributionGroups and DLMembers were empty, which matched Graph (0 Team groups, 0 mail-enabled groups) and EXO (0 mailboxes, 0 shared mailboxes). With a token-based Graph session the log line 'Connected to Graph as' prints an empty account, and Disconnect-MgGraph writes the context object to the console. An earlier attempt failed at the script's own Import-Module Microsoft.Graph because the wrapper had pinned Microsoft.Graph 2.4.0 first, which loaded a conflicting Authentication assembly version; that failure came from the wrapper and not from the script.",
+  "limitations": [
+    "The script's own device-code sign-in path was not exercised; sessions were pre-established with Azure CLI tokens.",
+    "The tenant has no Teams, mailboxes or distribution groups, so the per-Team member/owner loops, shared mailbox permission collection and DL member expansion ran over empty input and are not validated.",
+    "The ImportExcel workbook path was not exercised; only the CSV fallback ran.",
+    "Empty categories produce 0-byte CSV files without a header row, so 'none found' and 'not collected' look alike on disk; confirm with the run log.",
+    "Mixed Microsoft.Graph module versions installed side by side can break the script's unpinned Import-Module if another version is loaded earlier in the same session.",
+    "Performance and paging on a large tenant are not assessed. No tenant identifiers or exported rows are recorded here."
+  ]
+}
