@@ -390,6 +390,269 @@
       "tests": [],
       "sources": [],
       "evidence": []
+    },
+    {
+      "id": "intune-remediation-scancode-swap",
+      "title": "Intune Remediation: swap CapsLock and Right Ctrl",
+      "summary": "Machine-wide Scancode Map remap via Intune Remediations",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keyboard",
+        "scancode",
+        "remediation",
+        "CapsLock"
+      ],
+      "path": "Intune/Remediations/KeyboardScancodeSwap/Remediate.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "dependencies": [
+        "Intune/Remediations/KeyboardScancodeSwap/Detect.ps1"
+      ],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-scancode-swap-offline.json"
+      ]
+    },
+    {
+      "id": "intune-remediation-vcredist-x64",
+      "title": "Intune Remediation: Visual C++ x64 runtime",
+      "summary": "Install signed VC++ 2015-2022 x64 runtime via Intune Remediations",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "vcredist",
+        "runtime",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/VCRedistX64/Remediate.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "dependencies": [
+        "Intune/Remediations/VCRedistX64/Detect.ps1"
+      ],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-vcredist-x64-offline.json"
+      ]
+    },
+    {
+      "id": "intune-remediation-keyhac-fakeymacs",
+      "title": "Intune Remediation: Keyhac + Fakeymacs on Right Ctrl",
+      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from personal OneDrive or pinned upstream",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keyhac",
+        "fakeymacs",
+        "emacs",
+        "xkeymacs",
+        "onedrive",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/KeyhacFakeymacs/Remediate.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads from GitHub when no OneDrive copy exists.",
+      "dependencies": [
+        "Intune/Remediations/KeyhacFakeymacs/Detect.ps1"
+      ],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline.json"
+      ]
+    },
+    {
+      "id": "intune-remediation-portable-tools-onedrive",
+      "title": "Intune Remediation: copy portable tools from personal OneDrive",
+      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keepass",
+        "portable",
+        "onedrive",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/PortableToolsFromOneDrive/Remediate.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; reads the personal OneDrive.",
+      "dependencies": [
+        "Intune/Remediations/PortableToolsFromOneDrive/Detect.ps1"
+      ],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-portable-tools-onedrive-offline.json"
+      ]
+    },
+    {
+      "id": "intune-deploy-remediations",
+      "title": "deploy_remediations.py",
+      "summary": "Create/update and assign Intune Remediations from a manifest via Microsoft Graph",
+      "areas": [
+        "intune",
+        "graph"
+      ],
+      "tags": [
+        "deviceHealthScripts",
+        "remediation",
+        "deploy"
+      ],
+      "path": "Intune/tools/deploy_remediations.py",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Graph DeviceManagementScripts.ReadWrite.All (or DeviceManagementConfiguration.ReadWrite.All) and an Intune role that manages scripts.",
+      "dependencies": [
+        "Intune/Remediations/remediations.json"
+      ],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-deploy-remediations-offline.json"
+      ]
+    },
+    {
+      "id": "intune-remediation-scancode-swap-detect",
+      "title": "Intune Remediation: swap CapsLock and Right Ctrl (detection)",
+      "summary": "Machine-wide Scancode Map remap via Intune Remediations - detection script",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keyboard",
+        "scancode",
+        "remediation",
+        "CapsLock"
+      ],
+      "path": "Intune/Remediations/KeyboardScancodeSwap/Detect.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "read-only",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "intune-remediation-vcredist-x64-detect",
+      "title": "Intune Remediation: Visual C++ x64 runtime (detection)",
+      "summary": "Install signed VC++ 2015-2022 x64 runtime via Intune Remediations - detection script",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "vcredist",
+        "runtime",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/VCRedistX64/Detect.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "read-only",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "intune-remediation-keyhac-fakeymacs-detect",
+      "title": "Intune Remediation: Keyhac + Fakeymacs on Right Ctrl (detection)",
+      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from personal OneDrive or pinned upstream - detection script",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keyhac",
+        "fakeymacs",
+        "emacs",
+        "xkeymacs",
+        "onedrive",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/KeyhacFakeymacs/Detect.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "read-only",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads from GitHub when no OneDrive copy exists.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": []
+    },
+    {
+      "id": "intune-remediation-portable-tools-onedrive-detect",
+      "title": "Intune Remediation: copy portable tools from personal OneDrive (detection)",
+      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive - detection script",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keepass",
+        "portable",
+        "onedrive",
+        "remediation"
+      ],
+      "path": "Intune/Remediations/PortableToolsFromOneDrive/Detect.ps1",
+      "runbook": "Intune/Remediations/README.md",
+      "effect": "read-only",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; reads the personal OneDrive.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": []
     }
   ]
 }

@@ -1,0 +1,28 @@
+{
+  "remediations": [
+    {
+      "folder": "KeyboardScancodeSwap",
+      "displayName": "Keyboard - Swap CapsLock and Right Ctrl",
+      "description": "Machine-wide Scancode Map: CapsLock sends Right Ctrl and Right Ctrl sends CapsLock. Restart required.",
+      "runAsAccount": "system"
+    },
+    {
+      "folder": "VCRedistX64",
+      "displayName": "Runtime - Visual C++ 2015-2022 x64",
+      "description": "Installs the Microsoft-signed VC++ x64 runtime needed by Keyhac 1.83.",
+      "runAsAccount": "system"
+    },
+    {
+      "folder": "KeyhacFakeymacs",
+      "displayName": "Keyhac - Fakeymacs on Right Ctrl",
+      "description": "Per-user Keyhac + Fakeymacs (Emacs key bindings on Right Ctrl), copied from the personal OneDrive or pinned upstream releases.",
+      "runAsAccount": "user"
+    },
+    {
+      "folder": "PortableToolsFromOneDrive",
+      "displayName": "Portable tools - copy from personal OneDrive",
+      "description": "Per-user copy of portable tools (KeePass) from the personal OneDrive, excluding password databases.",
+      "runAsAccount": "user"
+    }
+  ]
+}

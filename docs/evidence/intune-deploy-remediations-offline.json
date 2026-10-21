@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-deploy-remediations",
+  "date": "2026-10-21",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/tools/deploy_remediations.py": "ed4dc70224b16060f1fe33c896e44793a4529021388da6502b3c68cddfd74b29",
+    "Intune/Remediations/README.md": "224f94b3df95a39374a73258c17ee8eb2eaf03f777d7dd2640a5f6e89ce3ec54",
+    "Intune/Remediations/remediations.json": "e40d22a3c7e8c6ee4000f84647cffcf450909b0699509d7ca0bd5f591d89b6dd",
+    "tests/test_intune_remediations.py": "94cc23c3b552a1eebad25033945e22df67f0e3001ca8422b1efc0a27d1d3f024"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7.6.6 (pwsh) for parsing and pure-function checks. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest tests.test_intune_remediations -v",
+  "expected": "Manifest validation rejects bad runAsAccount; script body base64 round-trips Detect.ps1; assignment body carries group and hourly interval and rejects 0.",
+  "observed": "Unit tests passed. Graph calls were not executed.",
+  "limitations": [
+    "Offline only: registry, OneDrive, downloads, shortcuts, Keyhac start-up and Intune/Graph execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}
