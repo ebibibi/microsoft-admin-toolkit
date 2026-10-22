@@ -2,37 +2,59 @@
 .SYNOPSIS
     Intune Remediation detection: winget packages installed and up to date for the user.
 .DESCRIPTION
-    Non-compliant when a package in $Packages is missing or winget reports an
-    upgrade for it, so the remediation also keeps the packages updated.
-    For tools not published in the Microsoft Store (Store apps are better
-    assigned as Intune Microsoft Store apps). Run as the logged-on user
-    (runAsAccount = user), 64-bit PowerShell. Keep $Packages identical in
-    Remediate.ps1.
+    Uses the Microsoft.WinGet.Client module (object output) instead of parsing
+    winget.exe exit codes. Non-compliant when a package in $Packages is missing
+    or has an available upgrade, so the hourly run also keeps packages current.
+    An upgrade that the remediation recorded as not applicable (for example the
+    package was installed by another installer) is ignored until a newer
+    version appears. The output lists installed/available versions.
+    Run as the logged-on user (runAsAccount = user), 64-bit PowerShell.
+    Keep $Packages and $StateFile identical in Remediate.ps1.
 #>
 $ErrorActionPreference = 'Stop'
 
 $Packages = @('Git.Git', 'Anthropic.ClaudeCode', 'OpenAI.Codex')
-$CommonArgs = @('--exact', '--accept-source-agreements', '--disable-interactivity')
+$StateFile = Join-Path $env:LOCALAPPDATA 'MySetup\winget-skipped-upgrades.json'
+
+function Get-SkippedUpgrades {
+    $skipped = @{}
+    if (Test-Path $StateFile) {
+        (Get-Content -Path $StateFile -Raw | ConvertFrom-Json).PSObject.Properties |
+            ForEach-Object { $skipped[$_.Name] = [string]$_.Value }
+    }
+    return $skipped
+}
 
 try {
-    if (-not (Get-Command winget.exe -ErrorAction SilentlyContinue)) {
-        Write-Output 'winget not available for this user (App Installer missing).'
+    if (-not (Get-Module -ListAvailable -Name Microsoft.WinGet.Client)) {
+        Write-Output 'Microsoft.WinGet.Client module not installed.'
         exit 1
     }
-    $missing = @()
-    $outdated = @()
+    Import-Module Microsoft.WinGet.Client
+    $skipped = Get-SkippedUpgrades
+    $report = @()
+    $needed = $false
     foreach ($id in $Packages) {
-        & winget.exe list --id $id @CommonArgs | Out-Null
-        if ($LASTEXITCODE -ne 0) { $missing += $id; continue }
-        # Exit 0 with --upgrade-available means an upgrade was found.
-        & winget.exe list --id $id --upgrade-available @CommonArgs | Out-Null
-        if ($LASTEXITCODE -eq 0) { $outdated += $id }
+        $pkg = Get-WinGetPackage -Id $id -MatchOption Equals | Select-Object -First 1
+        if (-not $pkg) {
+            $report += "$id=missing"
+            $needed = $true
+            continue
+        }
+        $latest = [string]($pkg.AvailableVersions | Select-Object -First 1)
+        if ($pkg.IsUpdateAvailable -and $skipped[$id] -ne $latest) {
+            $report += "$id=$($pkg.InstalledVersion)->$latest"
+            $needed = $true
+        }
+        elseif ($pkg.IsUpdateAvailable) {
+            $report += "$id=$($pkg.InstalledVersion) (upgrade $latest not applicable)"
+        }
+        else {
+            $report += "$id=$($pkg.InstalledVersion)"
+        }
     }
-    if ($missing.Count -or $outdated.Count) {
-        Write-Output ("Missing: $($missing -join ', '); upgrade available: $($outdated -join ', ')")
-        exit 1
-    }
-    Write-Output "Installed and current: $($Packages -join ', ')"
+    Write-Output ($report -join '; ')
+    if ($needed) { exit 1 }
     exit 0
 }
 catch {

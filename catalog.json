@@ -575,7 +575,9 @@
         "tests/test_intune_remediations.py"
       ],
       "sources": [],
-      "evidence": []
+      "evidence": [
+        "docs/evidence/intune-remediation-scancode-swap-detect-lab.json"
+      ]
     },
     {
       "id": "intune-remediation-vcredist-x64-detect",
@@ -601,7 +603,9 @@
         "tests/test_intune_remediations.py"
       ],
       "sources": [],
-      "evidence": []
+      "evidence": [
+        "docs/evidence/intune-remediation-vcredist-x64-detect-lab.json"
+      ]
     },
     {
       "id": "intune-remediation-keyhac-fakeymacs-detect",
@@ -630,7 +634,9 @@
         "tests/test_intune_remediations.py"
       ],
       "sources": [],
-      "evidence": []
+      "evidence": [
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-detect-lab.json"
+      ]
     },
     {
       "id": "intune-remediation-portable-tools-onedrive-detect",
