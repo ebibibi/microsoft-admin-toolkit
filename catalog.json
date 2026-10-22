@@ -658,6 +658,66 @@
       ],
       "sources": [],
       "evidence": []
+    },
+    {
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "winget",
+        "git",
+        "claude-code",
+        "codex",
+        "remediation",
+        "update"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [],
+      "id": "intune-remediation-winget-user-packages",
+      "title": "Intune Remediation: winget user packages",
+      "summary": "Install and keep winget packages up to date in user scope",
+      "path": "Intune/Remediations/WingetUserPackages/Remediate.ps1",
+      "effect": "changes-state",
+      "dependencies": [
+        "Intune/Remediations/WingetUserPackages/Detect.ps1"
+      ]
+    },
+    {
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "winget",
+        "git",
+        "claude-code",
+        "codex",
+        "remediation",
+        "update"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [],
+      "id": "intune-remediation-winget-user-packages-detect",
+      "title": "Intune Remediation: winget user packages (detection)",
+      "summary": "Detect missing or outdated winget packages",
+      "path": "Intune/Remediations/WingetUserPackages/Detect.ps1",
+      "effect": "read-only",
+      "dependencies": []
     }
   ]
 }

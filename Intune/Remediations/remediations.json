@@ -17,6 +17,12 @@
       "displayName": "Keyhac - Fakeymacs on Right Ctrl",
       "description": "Per-user Keyhac + Fakeymacs (Emacs key bindings on Right Ctrl), copied from the personal OneDrive or pinned upstream releases.",
       "runAsAccount": "user"
+    },
+    {
+      "folder": "WingetUserPackages",
+      "displayName": "Apps - winget user packages (Git, Claude Code, Codex)",
+      "description": "Installs and keeps up to date Git, Claude Code and Codex CLI with winget in user scope.",
+      "runAsAccount": "user"
     }
   ]
 }
