@@ -17,12 +17,6 @@
       "displayName": "Keyhac - Fakeymacs on Right Ctrl",
       "description": "Per-user Keyhac + Fakeymacs (Emacs key bindings on Right Ctrl), copied from the personal OneDrive or pinned upstream releases.",
       "runAsAccount": "user"
-    },
-    {
-      "folder": "PortableToolsFromOneDrive",
-      "displayName": "Portable tools - copy from personal OneDrive",
-      "description": "Per-user copy of portable tools (KeePass) from the personal OneDrive, excluding password databases.",
-      "runAsAccount": "user"
     }
   ]
 }
