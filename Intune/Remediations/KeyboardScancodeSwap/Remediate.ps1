@@ -2,7 +2,7 @@
 .SYNOPSIS
     Intune Remediation: write the machine-wide Scancode Map.
 .DESCRIPTION
-    Default mapping swaps CapsLock and Right Ctrl. Run as SYSTEM, 64-bit
+    Default mapping sends Right Ctrl from CapsLock (one-way). Run as SYSTEM, 64-bit
     PowerShell. The change applies to every user of the device and needs a
     restart. Keep $Mappings identical in Detect.ps1.
 #>
@@ -10,7 +10,6 @@ $ErrorActionPreference = 'Stop'
 
 $Mappings = @(
     @{ From = 0x003A; To = 0xE01D }  # CapsLock   -> Right Ctrl
-    @{ From = 0xE01D; To = 0x003A }  # Right Ctrl -> CapsLock
 )
 $KeyPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Keyboard Layout'
 

@@ -393,8 +393,8 @@
     },
     {
       "id": "intune-remediation-scancode-swap",
-      "title": "Intune Remediation: swap CapsLock and Right Ctrl",
-      "summary": "Machine-wide Scancode Map remap via Intune Remediations",
+      "title": "Intune Remediation: CapsLock as Right Ctrl",
+      "summary": "Machine-wide Scancode Map remap (CapsLock to Right Ctrl, one-way) via Intune Remediations",
       "areas": [
         "intune",
         "windows",
@@ -419,7 +419,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-remediation-scancode-swap-offline.json"
+        "docs/evidence/intune-remediation-scancode-swap-offline.json",
+        "docs/evidence/intune-remediation-scancode-swap-offline-2.json"
       ]
     },
     {
@@ -449,7 +450,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-remediation-vcredist-x64-offline.json"
+        "docs/evidence/intune-remediation-vcredist-x64-offline.json",
+        "docs/evidence/intune-remediation-vcredist-x64-offline-2.json"
       ]
     },
     {
@@ -482,7 +484,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline.json"
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline.json",
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline-2.json"
       ]
     },
     {
@@ -513,7 +516,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-remediation-portable-tools-onedrive-offline.json"
+        "docs/evidence/intune-remediation-portable-tools-onedrive-offline.json",
+        "docs/evidence/intune-remediation-portable-tools-onedrive-offline-2.json"
       ]
     },
     {
@@ -542,13 +546,14 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-deploy-remediations-offline.json"
+        "docs/evidence/intune-deploy-remediations-offline.json",
+        "docs/evidence/intune-deploy-remediations-offline-2.json"
       ]
     },
     {
       "id": "intune-remediation-scancode-swap-detect",
-      "title": "Intune Remediation: swap CapsLock and Right Ctrl (detection)",
-      "summary": "Machine-wide Scancode Map remap via Intune Remediations - detection script",
+      "title": "Intune Remediation: CapsLock as Right Ctrl (detection)",
+      "summary": "Machine-wide Scancode Map remap (CapsLock to Right Ctrl, one-way) via Intune Remediations - detection script",
       "areas": [
         "intune",
         "windows",
@@ -653,6 +658,66 @@
       ],
       "sources": [],
       "evidence": []
+    },
+    {
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "winget",
+        "git",
+        "claude-code",
+        "codex",
+        "remediation",
+        "update"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [],
+      "id": "intune-remediation-winget-user-packages",
+      "title": "Intune Remediation: winget user packages",
+      "summary": "Install and keep winget packages up to date in user scope",
+      "path": "Intune/Remediations/WingetUserPackages/Remediate.ps1",
+      "effect": "changes-state",
+      "dependencies": [
+        "Intune/Remediations/WingetUserPackages/Detect.ps1"
+      ]
+    },
+    {
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "winget",
+        "git",
+        "claude-code",
+        "codex",
+        "remediation",
+        "update"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": [],
+      "evidence": [],
+      "id": "intune-remediation-winget-user-packages-detect",
+      "title": "Intune Remediation: winget user packages (detection)",
+      "summary": "Detect missing or outdated winget packages",
+      "path": "Intune/Remediations/WingetUserPackages/Detect.ps1",
+      "effect": "read-only",
+      "dependencies": []
     }
   ]
 }

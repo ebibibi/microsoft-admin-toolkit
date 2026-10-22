@@ -2,8 +2,8 @@
   "remediations": [
     {
       "folder": "KeyboardScancodeSwap",
-      "displayName": "Keyboard - Swap CapsLock and Right Ctrl",
-      "description": "Machine-wide Scancode Map: CapsLock sends Right Ctrl and Right Ctrl sends CapsLock. Restart required.",
+      "displayName": "Keyboard - CapsLock as Right Ctrl",
+      "description": "Machine-wide Scancode Map: CapsLock sends Right Ctrl; Right Ctrl unchanged, no CapsLock key. Restart required.",
       "runAsAccount": "system"
     },
     {
@@ -19,9 +19,9 @@
       "runAsAccount": "user"
     },
     {
-      "folder": "PortableToolsFromOneDrive",
-      "displayName": "Portable tools - copy from personal OneDrive",
-      "description": "Per-user copy of portable tools (KeePass) from the personal OneDrive, excluding password databases.",
+      "folder": "WingetUserPackages",
+      "displayName": "Apps - winget user packages (Git, Claude Code, Codex)",
+      "description": "Installs and keeps up to date Git, Claude Code and Codex CLI with winget in user scope.",
       "runAsAccount": "user"
     }
   ]
