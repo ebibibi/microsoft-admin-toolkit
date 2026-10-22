@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-keyhac-fakeymacs",
+  "date": "2026-10-22",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/KeyhacFakeymacs/Remediate.ps1": "7679f86472644cc875e696586a990d5ee42d76d87db6a7cdad8e16684ff9dd72",
+    "Intune/Remediations/README.md": "e6cf86d2569c173a68a1439b4689240e05a2662c359f6b39e320e1e2a899b82f",
+    "Intune/Remediations/KeyhacFakeymacs/Detect.ps1": "3d8705b63b887b44d8a43f37b58ef0c39d22e9edb991f09adf47deae048dfb94",
+    "tests/test_intune_remediations.py": "1be0fe40894b34d7762953e1f120f68bb1c8f43d6f360e1649702f6240f0308c"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7.6.6 (pwsh) for parsing and pure-function checks. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest tests.test_intune_remediations -v",
+  "expected": "Set-CtrlSide makes Get-CtrlSide return R for an active L assignment, a section without the setting and a file without section-base-1, keeping comments and Japanese text.",
+  "observed": "All cases passed. Applied to the upstream Fakeymacs _config_personal.py (commit f83de826) only line 125 changed from \"L\" to \"R\". Keyhac v1.83 zip SHA-256 recorded from the GitHub release download.",
+  "limitations": [
+    "Offline only: registry, OneDrive, downloads, shortcuts, Keyhac start-up and Intune/Graph execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}

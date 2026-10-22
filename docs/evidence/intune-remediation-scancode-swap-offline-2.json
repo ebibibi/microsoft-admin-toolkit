@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-scancode-swap",
+  "date": "2026-10-22",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/KeyboardScancodeSwap/Remediate.ps1": "2d063102e5f5e31c5c90fd4f953566892e94e724a740c84c6c70c7c820e8c0ed",
+    "Intune/Remediations/README.md": "e6cf86d2569c173a68a1439b4689240e05a2662c359f6b39e320e1e2a899b82f",
+    "Intune/Remediations/KeyboardScancodeSwap/Detect.ps1": "18067d53e18c20962129d623ca21c98954ee8edd035b8644d3687dad43b92206",
+    "tests/test_intune_remediations.py": "1be0fe40894b34d7762953e1f120f68bb1c8f43d6f360e1649702f6240f0308c"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7.6.6 (pwsh) for parsing and pure-function checks. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest tests.test_intune_remediations -v",
+  "expected": "ConvertTo-ScancodeMap in Detect.ps1 and Remediate.ps1 returns the 24-byte Scancode Map for CapsLock<->Right Ctrl. Default $Mappings yields the one-way map 00,00,00,00,00,00,00,00,02,00,00,00,1d,e0,3a,00,00,00,00,00 (CapsLock -> Right Ctrl only).",
+  "observed": "Both returned 00,00,00,00,00,00,00,00,03,00,00,00,1d,e0,3a,00,3a,00,1d,e0,00,00,00,00; scripts parse without errors. Default $Mappings in both scripts produced the one-way map, identical to the owner's long-used .reg value.",
+  "limitations": [
+    "Offline only: registry, OneDrive, downloads, shortcuts, Keyhac start-up and Intune/Graph execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}

@@ -6,7 +6,7 @@ Each folder holds `Detect.ps1` (exit 0 = compliant, 1 = run remediation) and
 
 | Folder | Runs as | What it does |
 |---|---|---|
-| `KeyboardScancodeSwap` | system | Writes the machine-wide `Scancode Map` so CapsLock sends Right Ctrl and Right Ctrl sends CapsLock. Needs a restart. Affects every user of the device. |
+| `KeyboardScancodeSwap` | system | Writes the machine-wide `Scancode Map` so CapsLock sends Right Ctrl (one-way: Right Ctrl is unchanged and no key sends CapsLock). Needs a restart. Affects every user of the device. |
 | `VCRedistX64` | system | Installs the Visual C++ 2015-2022 x64 runtime (needed by Keyhac 1.83) after checking the installer is Microsoft-signed. |
 | `KeyhacFakeymacs` | user | Installs [Keyhac](https://github.com/crftwr/keyhac-win) + [Fakeymacs](https://github.com/smzht/fakeymacs) (Emacs bindings) into `%LOCALAPPDATA%\Programs\Keyhac`, sets `fc.side_of_ctrl_key = "R"`, adds a Startup shortcut and starts it. |
 | `PortableToolsFromOneDrive` | user | Copies portable tools (KeePass / KeePassXC) from the personal OneDrive into `%LOCALAPPDATA%\Programs` with a Start menu shortcut. |

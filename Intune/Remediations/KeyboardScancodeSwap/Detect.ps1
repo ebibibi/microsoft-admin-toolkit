@@ -2,9 +2,9 @@
 .SYNOPSIS
     Intune Remediation detection: is the machine-wide Scancode Map set as expected?
 .DESCRIPTION
-    Default mapping swaps CapsLock and Right Ctrl, so the physical CapsLock key
-    sends Right Ctrl (used by Fakeymacs with fc.side_of_ctrl_key = "R") and the
-    physical Right Ctrl key sends CapsLock.
+    Default mapping is one-way: the physical CapsLock key sends Right Ctrl (used
+    by Fakeymacs with fc.side_of_ctrl_key = "R"). Right Ctrl stays Right Ctrl,
+    so no key sends CapsLock. Add entries to $Mappings for a full swap.
     Run as SYSTEM, 64-bit PowerShell. Exit 0 = compliant, 1 = remediation needed.
     Keep $Mappings identical in Remediate.ps1.
 #>
@@ -14,7 +14,6 @@ $ErrorActionPreference = 'Stop'
 # Extended keys use the 0xE0 prefix in the high byte (Right Ctrl = 0xE01D).
 $Mappings = @(
     @{ From = 0x003A; To = 0xE01D }  # CapsLock   -> Right Ctrl
-    @{ From = 0xE01D; To = 0x003A }  # Right Ctrl -> CapsLock
 )
 $KeyPath = 'HKLM:\SYSTEM\CurrentControlSet\Control\Keyboard Layout'
 

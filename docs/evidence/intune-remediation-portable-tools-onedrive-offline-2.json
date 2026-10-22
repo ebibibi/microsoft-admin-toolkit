@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-portable-tools-onedrive",
+  "date": "2026-10-22",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/PortableToolsFromOneDrive/Remediate.ps1": "bb634b8fd80d1fc1a0ea5bf9bb5e00ba5f0910ee89aeeafe433fda548aafdbab",
+    "Intune/Remediations/README.md": "e6cf86d2569c173a68a1439b4689240e05a2662c359f6b39e320e1e2a899b82f",
+    "Intune/Remediations/PortableToolsFromOneDrive/Detect.ps1": "6a3891092181eba16ff8ca43b970b4593bf7c33fab9388368b87660181846d4b",
+    "tests/test_intune_remediations.py": "1be0fe40894b34d7762953e1f120f68bb1c8f43d6f360e1649702f6240f0308c"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7.6.6 (pwsh) for parsing and pure-function checks. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest tests.test_intune_remediations -v",
+  "expected": "Scripts parse and are ASCII.",
+  "observed": "Parsed without errors.",
+  "limitations": [
+    "Offline only: registry, OneDrive, downloads, shortcuts, Keyhac start-up and Intune/Graph execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}

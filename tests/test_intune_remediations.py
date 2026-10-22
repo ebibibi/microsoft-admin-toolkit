@@ -101,6 +101,18 @@ class PowerShellTest(unittest.TestCase):
             self.assertEqual(
                 out, "00,00,00,00,00,00,00,00,03,00,00,00,1d,e0,3a,00,3a,00,1d,e0,00,00,00,00", name)
 
+    def test_default_mapping_is_capslock_to_right_ctrl_only(self):
+        # Must equal the long-used .reg: hex:00,00,00,00,00,00,00,00,02,00,00,00,1D,E0,3A,00,00,00,00,00
+        for name in ("Detect.ps1", "Remediate.ps1"):
+            script = REMEDIATIONS / "KeyboardScancodeSwap" / name
+            text = script.read_text(encoding="utf-8-sig")
+            start = text.index("$Mappings = @(")
+            block = text[start:text.index("\n)", start) + 2]
+            out = run_function(script, "ConvertTo-ScancodeMap",
+                               block + "; $m = ConvertTo-ScancodeMap -Map $Mappings; "
+                               "($m | ForEach-Object { '{0:x2}' -f $_ }) -join ','")
+            self.assertEqual(out, "00,00,00,00,00,00,00,00,02,00,00,00,1d,e0,3a,00,00,00,00,00", name)
+
     def _set_ctrl_side(self, text: str) -> str:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "config_personal.py"
