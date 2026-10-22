@@ -1,0 +1,19 @@
+{
+  "entry_id": "intune-remediation-vcredist-x64-detect",
+  "date": "2026-10-23",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/VCRedistX64/Detect.ps1": "9e58a8524499a2b260be859179617ebc092d382faa17b32e2888844e6c9ad1e1",
+    "Intune/Remediations/README.md": "e592624da8bec0bf964885106a9bf9e3d494507a670043138ab5b75dd8f76b01",
+    "tests/test_intune_remediations.py": "1be0fe40894b34d7762953e1f120f68bb1c8f43d6f360e1649702f6240f0308c"
+  },
+  "runtime": "Windows 11 Enterprise lab workstation, Entra-joined and Intune-managed; Intune Remediations agent, Windows PowerShell 5.1 64-bit.",
+  "procedure": "Assigned through Intune Remediations (hourly) to a group containing only the device owner; read deviceRunStates via Microsoft Graph beta.",
+  "expected": "detectionState success with the compliant output message.",
+  "observed": "detectionState success, remediationState skipped, output: VC++ x64 runtime installed: v14.50.35719.00",
+  "limitations": [
+    "One device. The latest run passed detection without running remediation, so this does not show the remediation script itself succeeded on the device.",
+    "Run on 2026-10-22/23 (UTC); no user-visible behaviour (key press, Keyhac start-up) was observed by this check."
+  ]
+}
