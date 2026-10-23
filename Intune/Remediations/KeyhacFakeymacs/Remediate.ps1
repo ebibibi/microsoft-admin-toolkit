@@ -2,10 +2,9 @@
 .SYNOPSIS
     Intune Remediation: install Keyhac + Fakeymacs for the signed-in user.
 .DESCRIPTION
-    1. Source: if the user's personal OneDrive (OneDriveConsumer) has a folder
-       containing keyhac.exe under $OneDriveSearchRoot, copy that folder (the
-       user's own Keyhac with their settings). Otherwise download the pinned
-       Keyhac release and verify its SHA-256.
+    1. If keyhac.exe is missing, download the pinned Keyhac release and verify
+       its SHA-256. Nothing is taken from user-synced storage such as the
+       personal OneDrive, so every device gets the same, reviewed binaries.
     2. If config.py is not Fakeymacs, back it up and add Fakeymacs from the
        pinned upstream commit.
     3. Make config_personal.py use the Right Ctrl key (fc.side_of_ctrl_key).
@@ -18,8 +17,6 @@ $ErrorActionPreference = 'Stop'
 $InstallDir = Join-Path $env:LOCALAPPDATA 'Programs\Keyhac'
 $StartupLink = Join-Path ([Environment]::GetFolderPath('Startup')) 'Keyhac.lnk'
 $CtrlSide = 'R'
-# Relative to the personal OneDrive root. Searched up to 3 folders deep.
-$OneDriveSearchRoot = 'settings'
 
 $KeyhacZipUrl = 'https://github.com/crftwr/keyhac-win/releases/download/v1.83/keyhac_183.zip'
 $KeyhacZipSha256 = 'A54A7332D51579EDFCAB1DC64AB1C559DC07141971198A154B3C179716897267'
@@ -36,21 +33,9 @@ function Stop-Keyhac {
         Stop-Process -Force
 }
 
-function Find-OneDriveKeyhac {
-    $root = $env:OneDriveConsumer
-    if (-not $root -or -not (Test-Path $root)) { return $null }
-    $searchRoot = Join-Path $root $OneDriveSearchRoot
-    if (-not (Test-Path $searchRoot)) { return $null }
-    $exe = Get-ChildItem -Path $searchRoot -Filter 'keyhac.exe' -File -Recurse -Depth 3 -ErrorAction SilentlyContinue |
-        Sort-Object LastWriteTime -Descending | Select-Object -First 1
-    if ($exe) { return $exe.DirectoryName }
-    return $null
-}
-
 function Copy-Folder {
     param([string]$Source, [string]$Destination)
-    # Never copy password databases or Python caches from a synced folder.
-    & robocopy.exe $Source $Destination /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP /XF '*.kdbx' /XD '__pycache__' | Out-Null
+    & robocopy.exe $Source $Destination /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP /XD '__pycache__' | Out-Null
     if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE): $Source" }
 }
 
@@ -109,14 +94,7 @@ try {
     New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
     $restart = $false
 
-    $source = Find-OneDriveKeyhac
-    if ($source) {
-        Stop-Keyhac
-        Copy-Folder -Source $source -Destination $InstallDir
-        $log.Add("copied Keyhac from personal OneDrive")
-        $restart = $true
-    }
-    elseif (-not (Test-Path (Join-Path $InstallDir 'keyhac.exe'))) {
+    if (-not (Test-Path (Join-Path $InstallDir 'keyhac.exe'))) {
         $dir = Expand-Download -Url $KeyhacZipUrl -Sha256 $KeyhacZipSha256 -Name 'keyhac'
         Copy-Folder -Source $dir -Destination $InstallDir
         $log.Add('installed Keyhac 1.83 from GitHub')

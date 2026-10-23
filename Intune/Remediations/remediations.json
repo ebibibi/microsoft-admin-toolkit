@@ -15,7 +15,7 @@
     {
       "folder": "KeyhacFakeymacs",
       "displayName": "Keyhac - Fakeymacs on Right Ctrl",
-      "description": "Per-user Keyhac + Fakeymacs (Emacs key bindings on Right Ctrl), copied from the personal OneDrive or pinned upstream releases.",
+      "description": "Per-user Keyhac + Fakeymacs (Emacs key bindings on Right Ctrl) from pinned upstream releases; nothing is read from the personal OneDrive.",
       "runAsAccount": "user"
     },
     {

@@ -457,7 +457,7 @@
     {
       "id": "intune-remediation-keyhac-fakeymacs",
       "title": "Intune Remediation: Keyhac + Fakeymacs on Right Ctrl",
-      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from personal OneDrive or pinned upstream",
+      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from pinned upstream releases",
       "areas": [
         "intune",
         "windows",
@@ -468,14 +468,13 @@
         "fakeymacs",
         "emacs",
         "xkeymacs",
-        "onedrive",
         "remediation"
       ],
       "path": "Intune/Remediations/KeyhacFakeymacs/Remediate.ps1",
       "runbook": "Intune/Remediations/README.md",
       "effect": "changes-state",
       "status": "experimental",
-      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads from GitHub when no OneDrive copy exists.",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads pinned releases from GitHub.",
       "dependencies": [
         "Intune/Remediations/KeyhacFakeymacs/Detect.ps1"
       ],
@@ -485,13 +484,14 @@
       "sources": [],
       "evidence": [
         "docs/evidence/intune-remediation-keyhac-fakeymacs-offline.json",
-        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline-2.json"
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline-2.json",
+        "docs/evidence/intune-remediation-keyhac-fakeymacs-offline-3.json"
       ]
     },
     {
       "id": "intune-remediation-portable-tools-onedrive",
       "title": "Intune Remediation: copy portable tools from personal OneDrive",
-      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive",
+      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive (deprecated: install tools from a managed source such as Intune Store apps or winget)",
       "areas": [
         "intune",
         "windows",
@@ -506,7 +506,7 @@
       "path": "Intune/Remediations/PortableToolsFromOneDrive/Remediate.ps1",
       "runbook": "Intune/Remediations/README.md",
       "effect": "changes-state",
-      "status": "experimental",
+      "status": "deprecated",
       "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; reads the personal OneDrive.",
       "dependencies": [
         "Intune/Remediations/PortableToolsFromOneDrive/Detect.ps1"
@@ -610,7 +610,7 @@
     {
       "id": "intune-remediation-keyhac-fakeymacs-detect",
       "title": "Intune Remediation: Keyhac + Fakeymacs on Right Ctrl (detection)",
-      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from personal OneDrive or pinned upstream - detection script",
+      "summary": "Per-user Keyhac and Fakeymacs Emacs key bindings from pinned upstream releases - detection script",
       "areas": [
         "intune",
         "windows",
@@ -621,14 +621,13 @@
         "fakeymacs",
         "emacs",
         "xkeymacs",
-        "onedrive",
         "remediation"
       ],
       "path": "Intune/Remediations/KeyhacFakeymacs/Detect.ps1",
       "runbook": "Intune/Remediations/README.md",
       "effect": "read-only",
       "status": "experimental",
-      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads from GitHub when no OneDrive copy exists.",
+      "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; downloads pinned releases from GitHub.",
       "dependencies": [],
       "tests": [
         "tests/test_intune_remediations.py"
@@ -641,7 +640,7 @@
     {
       "id": "intune-remediation-portable-tools-onedrive-detect",
       "title": "Intune Remediation: copy portable tools from personal OneDrive (detection)",
-      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive - detection script",
+      "summary": "Per-user copy of portable tools such as KeePass from the personal OneDrive - detection script (deprecated: install tools from a managed source such as Intune Store apps or winget)",
       "areas": [
         "intune",
         "windows",
@@ -656,7 +655,7 @@
       "path": "Intune/Remediations/PortableToolsFromOneDrive/Detect.ps1",
       "runbook": "Intune/Remediations/README.md",
       "effect": "read-only",
-      "status": "experimental",
+      "status": "deprecated",
       "permissions": "Deployed through Intune Remediations; runs on the device as the signed-in user; reads the personal OneDrive.",
       "dependencies": [],
       "tests": [

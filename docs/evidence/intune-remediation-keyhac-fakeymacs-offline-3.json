@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-keyhac-fakeymacs",
+  "date": "2026-10-23",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/KeyhacFakeymacs/Remediate.ps1": "c5f2087e3ffaa87905944845a7dc29efefdff0213df863441608a85563c1910e",
+    "Intune/Remediations/README.md": "caeaedb0fa9f6373ea3e7a7ca981bdb11d9f698c759e4f05d1dcd40008b138ba",
+    "Intune/Remediations/KeyhacFakeymacs/Detect.ps1": "3d8705b63b887b44d8a43f37b58ef0c39d22e9edb991f09adf47deae048dfb94",
+    "tests/test_intune_remediations.py": "77db36f9e5f07bae0b891d87486168c8488716f94b0d75533afb9d15732f9557"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7.6.6 (pwsh) for parsing and pure-function checks. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest discover -s tests -v",
+  "expected": "Scripts parse and are ASCII; no manifest script references OneDriveConsumer; Set-CtrlSide still rewrites side_of_ctrl_key to R.",
+  "observed": "All 37 tests passed, including test_manifest_scripts_do_not_read_personal_onedrive and the Set-CtrlSide cases.",
+  "limitations": [
+    "Offline only: downloads, shortcuts, Keyhac start-up and Intune execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}
