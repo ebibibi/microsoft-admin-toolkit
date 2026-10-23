@@ -9,7 +9,7 @@ Each folder holds `Detect.ps1` (exit 0 = compliant, 1 = run remediation) and
 | `KeyboardScancodeSwap` | system | Writes the machine-wide `Scancode Map` so CapsLock sends Right Ctrl (one-way: Right Ctrl is unchanged and no key sends CapsLock). Needs a restart. Affects every user of the device. |
 | `VCRedistX64` | system | Installs the Visual C++ 2015-2022 x64 runtime (needed by Keyhac 1.83) after checking the installer is Microsoft-signed. |
 | `KeyhacFakeymacs` | user | Installs [Keyhac](https://github.com/crftwr/keyhac-win) + [Fakeymacs](https://github.com/smzht/fakeymacs) (Emacs bindings) into `%LOCALAPPDATA%\Programs\Keyhac`, sets `fc.side_of_ctrl_key = "R"`, adds a Startup shortcut and starts it. |
-| `PortableToolsFromOneDrive` | user | Copies portable tools (KeePass / KeePassXC) from the personal OneDrive into `%LOCALAPPDATA%\Programs` with a Start menu shortcut. Not in the default manifest: for apps published in the Microsoft Store, prefer an Intune *Microsoft Store app (new)* assignment, which Intune keeps up to date automatically (e.g. KeePassXC, Store ID `XP8K2L36VP0QMB`). |
+| `PortableToolsFromOneDrive` | user | **Deprecated, not in the manifest.** Copies portable tools (KeePass / KeePassXC) from the personal OneDrive. Do not use: install tools from a managed source instead (Intune *Microsoft Store app (new)*, e.g. KeePassXC Store ID `XP8K2L36VP0QMB`, or `WingetUserPackages`). |
 | `WingetUserPackages` | user | Installs (user scope) and upgrades winget packages that are not in the Microsoft Store (default: Git, Claude Code, Codex CLI) through the `Microsoft.WinGet.Client` module, which the remediation installs for the user from PSGallery. Detection treats an available upgrade as non-compliant, so the hourly run keeps them current; an upgrade reported as not applicable is recorded in `%LOCALAPPDATA%\MySetup\winget-skipped-upgrades.json` and ignored until a newer version appears. Do not rely on `winget.exe` exit codes here: on a lab device they reported an upgrade for every package that never cleared. |
 
 With `KeyboardScancodeSwap` and `KeyhacFakeymacs` together, the key next to
@@ -18,28 +18,27 @@ Windows shortcuts. This is the layout described in the Fakeymacs README.
 
 ## Sources and pinning
 
-- `KeyhacFakeymacs` first looks for a folder containing `keyhac.exe` under
-  `%OneDriveConsumer%\settings` (3 levels). If found, it copies that folder, so
-  the user's own Keyhac and `config_personal.py` win. Otherwise it downloads
-  Keyhac `v1.83` (`keyhac_183.zip`, SHA-256 pinned in the script).
+- `KeyhacFakeymacs` downloads Keyhac `v1.83` (`keyhac_183.zip`, SHA-256 pinned
+  in the script) when `keyhac.exe` is missing. It does not read the personal
+  OneDrive or any other user-synced folder: whether a consumer OneDrive is
+  signed in must not change what runs on a managed device, and `config.py` /
+  `config_personal.py` are Python that Keyhac executes.
+- `config_personal.py` is created from the Fakeymacs sample when missing; the
+  remediation only enforces `fc.side_of_ctrl_key`. Other local edits are kept.
 - If `config.py` is not Fakeymacs, it is backed up (`config.py.bak-<time>`) and
   Fakeymacs is taken from commit `f83de826` (archive not hash-pinned; GitHub
   does not guarantee byte-stable archives). Update the constants to upgrade.
 - Fakeymacs and Keyhac are not copied into this repository; they are
   downloaded on the device from their upstream repositories.
-- `PortableToolsFromOneDrive` never copies `*.kdbx`. Keep opening the database
-  from OneDrive so there is only one synced copy.
 
 ## Requirements and limits
 
 - Windows 10/11 Enterprise/Education (or Windows E3/E5) licensing for Remediations;
   device Entra-joined or hybrid-joined and Intune-managed.
-- User-context scripts run only while the user is signed in. The personal
-  OneDrive must be signed in to the OneDrive client for the OneDrive copy paths
-  (`OneDriveConsumer` is set only then). Files On-Demand placeholders are
-  downloaded by the copy.
-- `PortableToolsFromOneDrive` reports failure (exit 1) when a tool is not found,
-  so the Intune report shows it rather than looking compliant.
+- User-context scripts run only while the user is signed in.
+- Devices already set up by an earlier version keep their existing Keyhac
+  folder while detection passes; delete `%LOCALAPPDATA%\Programs\Keyhac` to
+  reinstall from the pinned sources.
 - Keyhac runs unelevated and cannot remap keys in elevated windows.
 - Scripts are ASCII-only so Windows PowerShell 5.1 reads them the same with or
   without a BOM. Keep `$Mappings` / `$Tools` / constants identical between the

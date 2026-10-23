@@ -80,6 +80,14 @@ class ScriptTextTest(unittest.TestCase):
         for script in REMEDIATIONS.rglob("*.ps1"):
             script.read_bytes().removeprefix(b"\xef\xbb\xbf").decode("ascii")
 
+    def test_manifest_scripts_do_not_read_personal_onedrive(self):
+        # What a managed device runs must not depend on whether a consumer
+        # OneDrive happens to be signed in (OneDriveConsumer is set only then).
+        for item in deploy.load_manifest(REMEDIATIONS / "remediations.json"):
+            for name in ("Detect.ps1", "Remediate.ps1"):
+                text = (REMEDIATIONS / item["folder"] / name).read_text(encoding="utf-8-sig")
+                self.assertNotIn("OneDriveConsumer", text, f"{item['folder']}/{name}")
+
 
 @unittest.skipUnless(PWSH, "pwsh not installed")
 class PowerShellTest(unittest.TestCase):
