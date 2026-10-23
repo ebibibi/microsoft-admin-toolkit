@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-winget-user-packages-detect",
+  "date": "2026-10-23",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/WingetUserPackages/Detect.ps1": "977ec7712995a78b4286c2446d02b1a676741fd30d112b8e1131841e610c62f4",
+    "Intune/Remediations/README.md": "5bf9bb3cd59607d65859933a1cb40ba82c3286fc3e2865dc64705f2cd18eaf74",
+    "tests/test_intune_remediations.py": "77db36f9e5f07bae0b891d87486168c8488716f94b0d75533afb9d15732f9557"
+  },
+  "runtime": "Windows 11 Enterprise lab workstation (10.0.26200), Entra-joined and Intune-managed; Intune Management Extension 1.106.151.0; Windows PowerShell 5.1 64-bit, user context.",
+  "procedure": "Assigned through Intune Remediations (hourly) to a group containing only the device owner. After the script update the device kept running the cached previous version; restarting the IntuneManagementExtension service made it fetch the new version. Read deviceRunStates via Microsoft Graph beta with a read-only app.",
+  "expected": "Detection reports the module missing on first run, then reports installed versions and exits 0 after remediation.",
+  "observed": "Pre-detection: \"Microsoft.WinGet.Client module not installed.\" Post-detection: \"Git.Git=2.55.0.5; Anthropic.ClaudeCode=2.1.302; OpenAI.Codex=0.161.0\", detectionState after remediation compliant.",
+  "limitations": [
+    "One device and one user.",
+    "The packages were already installed on the device, so the install path (Install-WinGetPackage) and the not-applicable upgrade path were not exercised; the run upgraded or confirmed existing installs.",
+    "Microsoft.WinGet.Client version installed from PSGallery was not recorded."
+  ]
+}

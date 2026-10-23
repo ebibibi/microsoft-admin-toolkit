@@ -679,13 +679,15 @@
         "update"
       ],
       "runbook": "Intune/Remediations/README.md",
-      "status": "experimental",
+      "status": "verified",
       "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
       "tests": [
         "tests/test_intune_remediations.py"
       ],
       "sources": [],
-      "evidence": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-winget-user-packages-lab.json"
+      ],
       "id": "intune-remediation-winget-user-packages",
       "title": "Intune Remediation: winget user packages",
       "summary": "Install and keep winget packages up to date in user scope",
@@ -710,13 +712,15 @@
         "update"
       ],
       "runbook": "Intune/Remediations/README.md",
-      "status": "experimental",
+      "status": "verified",
       "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
       "tests": [
         "tests/test_intune_remediations.py"
       ],
       "sources": [],
-      "evidence": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-winget-user-packages-detect-lab.json"
+      ],
       "id": "intune-remediation-winget-user-packages-detect",
       "title": "Intune Remediation: winget user packages (detection)",
       "summary": "Detect missing or outdated winget packages",

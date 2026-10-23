@@ -36,6 +36,12 @@ Windows shortcuts. This is the layout described in the Fakeymacs README.
 - Windows 10/11 Enterprise/Education (or Windows E3/E5) licensing for Remediations;
   device Entra-joined or hybrid-joined and Intune-managed.
 - User-context scripts run only while the user is signed in.
+- After a script update, a device keeps running the cached previous version
+  (`C:\WINDOWS\IMECache\HealthScripts\<policyId>_<version>`) until the Intune
+  Management Extension refreshes its policies (typically every 8 hours). A device
+  sync or an on-demand remediation does not refresh it; restarting the
+  `IntuneManagementExtension` service does. Check `HealthScripts.log` for the new
+  `_<version>` folder before judging an updated script by its results.
 - Devices already set up by an earlier version keep their existing Keyhac
   folder while detection passes; delete `%LOCALAPPDATA%\Programs\Keyhac` to
   reinstall from the pinned sources.
