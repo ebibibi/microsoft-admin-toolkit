@@ -679,7 +679,7 @@
         "update"
       ],
       "runbook": "Intune/Remediations/README.md",
-      "status": "verified",
+      "status": "experimental",
       "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
       "tests": [
         "tests/test_intune_remediations.py"
@@ -712,7 +712,7 @@
         "update"
       ],
       "runbook": "Intune/Remediations/README.md",
-      "status": "verified",
+      "status": "experimental",
       "permissions": "Deployed through Intune Remediations; runs as the signed-in user; uses the winget community source.",
       "tests": [
         "tests/test_intune_remediations.py"

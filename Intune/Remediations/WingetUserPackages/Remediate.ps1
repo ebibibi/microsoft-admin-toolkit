@@ -13,7 +13,7 @@
 #>
 $ErrorActionPreference = 'Stop'
 
-$Packages = @('Git.Git', 'Anthropic.ClaudeCode', 'OpenAI.Codex')
+$Packages = @('Git.Git', 'Anthropic.ClaudeCode', 'OpenAI.Codex', 'Obsidian.Obsidian')
 $StateFile = Join-Path $env:LOCALAPPDATA 'MySetup\winget-skipped-upgrades.json'
 $NotApplicable = @('NoApplicableUpgrade', 'NoApplicableInstallers')
 
