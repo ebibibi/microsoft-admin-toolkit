@@ -20,8 +20,8 @@
     },
     {
       "folder": "WingetUserPackages",
-      "displayName": "Apps - winget user packages (Git, Claude Code, Codex)",
-      "description": "Installs and keeps up to date Git, Claude Code and Codex CLI with winget in user scope.",
+      "displayName": "Apps - winget user packages (Git, Claude Code, Codex, Obsidian)",
+      "description": "Installs and keeps up to date Git, Claude Code, Codex CLI and Obsidian with winget in user scope.",
       "runAsAccount": "user"
     }
   ]
