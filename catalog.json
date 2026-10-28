@@ -787,6 +787,37 @@
         "tests/test_intune_remediations.py"
       ],
       "sources": []
+    },
+    {
+      "id": "intune-win32-app-deploy",
+      "title": "Intune Win32 app: package, upload and assign from Linux",
+      "summary": "Build encrypted Intune Win32 content in Python (no IntuneWinAppUtil), upload via Graph and assign to a group",
+      "path": "Intune/tools/deploy_win32_app.py",
+      "effect": "changes-state",
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "win32",
+        "intunewin",
+        "msi",
+        "graph",
+        "cloudflare",
+        "warp"
+      ],
+      "runbook": "Intune/Win32Apps/README.md",
+      "status": "experimental",
+      "permissions": "DeviceManagementApps.ReadWrite.All and an Intune role that can manage apps.",
+      "tests": [
+        "tests/test_intune_win32_app.py"
+      ],
+      "sources": [],
+      "evidence": [],
+      "dependencies": [
+        "Intune/Win32Apps/CloudflareOneClient/app.json"
+      ]
     }
   ]
 }
