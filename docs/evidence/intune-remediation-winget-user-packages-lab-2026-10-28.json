@@ -1,0 +1,21 @@
+{
+  "entry_id": "intune-remediation-winget-user-packages",
+  "date": "2026-10-28",
+  "scope": "lab",
+  "outcome": "failed",
+  "artifacts": {
+    "Intune/Remediations/WingetUserPackages/Remediate.ps1": "b10dcf80d1a5cb228544781326da2f5712bd3dec9b3bb1169f0ca5158b3b4c3c",
+    "Intune/Remediations/README.md": "ccf72b08fa324b5ab01f3e135a323380cb23abfdeaf3c7e072b54893a2b2c8ef",
+    "Intune/Remediations/WingetUserPackages/Detect.ps1": "aee12c5fca107229d83411ec496c32f4ad230e61667849f954cb54ae513539f0",
+    "tests/test_intune_remediations.py": "b63e8d6b62b863a1dedf9b4e8f7ed7c404f5c09f076373b66bb340a19c2f0176"
+  },
+  "runtime": "Windows 11 Enterprise lab workstation on a Windows Insider build (10.0.26340), Entra-joined and Intune-managed; Windows PowerShell 5.1 64-bit, user context; Microsoft.WinGet.Client from PSGallery (version not recorded).",
+  "procedure": "Same assignment as the 10.0.26200 lab run (hourly, group containing only the device owner). Detection had been failing with 0x800706BA; the device owner ran Repair-WinGetPackageManager -Force -Latest once in Windows PowerShell 5.1. Read deviceRunStates via Microsoft Graph beta with a read-only app after two consecutive hourly runs.",
+  "expected": "Remediation installs the three missing packages in user scope, upgrades Git, and exits 0.",
+  "observed": "Run 1 (2026-10-28T11:09:39Z) pre-detection: \"Git.Git=2.50.1->2.56.0.3; Anthropic.ClaudeCode=missing; OpenAI.Codex=missing; Obsidian.Obsidian=missing\"; remediationState scriptError. Run 2 (2026-10-28T12:10:55Z) pre-detection: \"Git.Git=2.56.0.3; Anthropic.ClaudeCode=2.1.302; OpenAI.Codex=missing; Obsidian.Obsidian=1.14.5\"; remediationState scriptError. Install-WinGetPackage installed Claude Code and Obsidian and Update-WinGetPackage upgraded Git, but OpenAI.Codex was not installed and the script exited 1 on both runs.",
+  "limitations": [
+    "One device and one user.",
+    "Intune does not return remediation stdout, so the Codex install status and installer error codes were not observed.",
+    "The WinGet COM repair was a manual step on the device, not part of the remediation."
+  ]
+}
