@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-melissa-detect",
+  "date": "2026-10-28",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/MelissaPlayer/Remediate.ps1": "1442a7532852d5f2c1840eac1a869a0d59fd4989291a44784f839cce359a8c1e",
+    "Intune/Remediations/MelissaPlayer/Detect.ps1": "ac66ec6383168bb675eed341f7ee8b54c81114db0afc826b7e4372c61ea6bc84",
+    "Intune/Remediations/README.md": "ccf72b08fa324b5ab01f3e135a323380cb23abfdeaf3c7e072b54893a2b2c8ef",
+    "tests/test_intune_remediations.py": "b63e8d6b62b863a1dedf9b4e8f7ed7c404f5c09f076373b66bb340a19c2f0176"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3, PowerShell 7 (pwsh) for parsing. Not Windows PowerShell 5.1; no Windows device.",
+  "procedure": "python3 -m unittest tests.test_intune_remediations -v; sha256sum of the downloaded v4.5.0 release zip and the installer inside it",
+  "expected": "Scripts parse and are ASCII; Detect/Remediate pin the same version; pinned hashes equal the release files.",
+  "observed": "Parsed without errors; zip SHA-256 equals the digest GitHub reports for the asset; installer SHA-256 equals the pinned value.",
+  "limitations": [
+    "Offline only: download, silent install, registry detection and Intune execution were not exercised.",
+    "Not evidence that the remediation works on a device."
+  ]
+}
