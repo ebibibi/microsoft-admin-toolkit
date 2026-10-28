@@ -23,5 +23,5 @@ python3 Intune/tools/deploy_win32_app.py Intune/Win32Apps/<App>/app.json \
 ## Known limitations
 
 - Only single-file installers (the folder holds the installer alone).
-- `minimumSupportedWindowsRelease` defaults to 21H2.
+- The minimum OS is set with `minimumSupportedOperatingSystem` (default `v10_1607`). Graph returned 400 "Unknown MinimumSupportedWindowsRelease: 21H2" for the string field.
 - Graph `beta` endpoints; no app dependency or supersedence support.
