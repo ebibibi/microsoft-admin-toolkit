@@ -8,6 +8,7 @@ device and are recorded in evidence, not here.
 import base64
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -150,6 +151,16 @@ class PowerShellTest(unittest.TestCase):
     def test_ctrl_side_preserves_japanese_text(self):
         out = self._set_ctrl_side('# [section-base-1] ---\n# 左右どちら\nfc.side_of_ctrl_key = "L"\n')
         self.assertIn("左右どちら", out)
+
+    def test_melissa_detect_and_remediate_pin_the_same_release(self):
+        folder = REMEDIATIONS / "MelissaPlayer"
+        detect = (folder / "Detect.ps1").read_text(encoding="utf-8-sig")
+        remediate = (folder / "Remediate.ps1").read_text(encoding="utf-8-sig")
+        version = re.search(r"^\$Version = '([0-9.]+)'", remediate, re.M).group(1)
+        self.assertIn(f"$MinVersion = [version]'{version}'", detect)
+        self.assertIn("{907F3FD5-AADA-4711-A93D-EF935B4AC39F}_is1", detect)
+        for name in ("ZipSha256", "InstallerSha256"):
+            self.assertRegex(remediate, rf"\${name} = '[0-9A-F]{{64}}'")
 
 
 if __name__ == "__main__":

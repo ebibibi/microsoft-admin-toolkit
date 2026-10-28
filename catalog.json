@@ -727,6 +727,66 @@
       "path": "Intune/Remediations/WingetUserPackages/Detect.ps1",
       "effect": "read-only",
       "dependencies": []
+    },
+    {
+      "id": "intune-remediation-melissa",
+      "title": "Intune Remediation: Melissa music practice player",
+      "summary": "Install Melissa from a SHA-256-pinned GitHub release via Intune Remediations",
+      "path": "Intune/Remediations/MelissaPlayer/Remediate.ps1",
+      "effect": "changes-state",
+      "dependencies": [
+        "Intune/Remediations/MelissaPlayer/Detect.ps1"
+      ],
+      "evidence": [
+        "docs/evidence/intune-remediation-melissa-offline.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "melissa",
+        "music",
+        "remediation",
+        "github-release"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": []
+    },
+    {
+      "id": "intune-remediation-melissa-detect",
+      "title": "Intune Remediation: Melissa music practice player (detection)",
+      "summary": "Install Melissa from a SHA-256-pinned GitHub release via Intune Remediations - detection script",
+      "path": "Intune/Remediations/MelissaPlayer/Detect.ps1",
+      "effect": "read-only",
+      "dependencies": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-melissa-detect-offline.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "melissa",
+        "music",
+        "remediation",
+        "github-release"
+      ],
+      "runbook": "Intune/Remediations/README.md",
+      "status": "experimental",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediations.py"
+      ],
+      "sources": []
     }
   ]
 }
