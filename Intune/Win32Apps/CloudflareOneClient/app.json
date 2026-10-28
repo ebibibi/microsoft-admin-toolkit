@@ -1,0 +1,23 @@
+{
+  "displayName": "Cloudflare One Client (WARP)",
+  "publisher": "Cloudflare, Inc.",
+  "description": "Cloudflare One Client (formerly WARP). Installs machine-wide and pre-sets the Zero Trust team so the user only signs in. The team name is a deploy-time parameter (ORGANIZATION).",
+  "informationUrl": "https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/",
+  "installer": {
+    "url": "https://downloads.cloudflareclient.com/v1/download/windows/version/2026.8.2115.0",
+    "fileName": "Cloudflare_WARP.msi",
+    "sha256": "ab3138dbebdf132af076b5ebcb25b42345d29258acb76267c3bd1f8cfea57a53",
+    "version": "26.8.2115.0",
+    "productCode": "{BC095815-030E-4AFD-8AA2-6B8A8FAE0B9A}"
+  },
+  "installCommandLine": "msiexec /i \"Cloudflare_WARP.msi\" /qn /norestart ORGANIZATION=\"{{ORGANIZATION}}\" ONBOARDING=\"false\"",
+  "uninstallCommandLine": "msiexec /x {BC095815-030E-4AFD-8AA2-6B8A8FAE0B9A} /qn /norestart",
+  "runAsAccount": "system",
+  "architectures": "x64",
+  "detection": {
+    "type": "file",
+    "path": "%ProgramFiles%\\Cloudflare\\Cloudflare WARP",
+    "name": "warp-svc.exe",
+    "note": "File detection, not product code: the client self-updates and the product code changes with each version."
+  }
+}
