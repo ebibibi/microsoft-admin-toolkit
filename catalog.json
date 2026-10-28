@@ -809,13 +809,15 @@
         "warp"
       ],
       "runbook": "Intune/Win32Apps/README.md",
-      "status": "experimental",
+      "status": "verified",
       "permissions": "DeviceManagementApps.ReadWrite.All and an Intune role that can manage apps.",
       "tests": [
         "tests/test_intune_win32_app.py"
       ],
       "sources": [],
-      "evidence": [],
+      "evidence": [
+        "docs/evidence/intune-win32-app-deploy-production.json"
+      ],
       "dependencies": [
         "Intune/Win32Apps/CloudflareOneClient/app.json"
       ]
