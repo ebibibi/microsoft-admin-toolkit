@@ -23,6 +23,12 @@
       "displayName": "Apps - winget user packages (Git, Claude Code, Codex, Obsidian)",
       "description": "Installs and keeps up to date Git, Claude Code, Codex CLI and Obsidian with winget in user scope.",
       "runAsAccount": "user"
+    },
+    {
+      "folder": "MelissaPlayer",
+      "displayName": "Apps - Melissa (music practice player)",
+      "description": "Installs Melissa 4.5.0 for all users from the upstream GitHub release, verified by pinned SHA-256 (installer is unsigned).",
+      "runAsAccount": "system"
     }
   ]
 }
