@@ -26,6 +26,8 @@ do not treat the repository's general quality as proof of every individual scrip
   which talks to the WinGet COM server. On one Windows Insider build (10.0.26340)
   detection stopped at `Failed to create instance: -2147023174` (0x800706BA, RPC
   server unavailable) before any package was checked, so nothing was installed.
-  The same script passed on 10.0.26200. The cause was not diagnosed; a device that
-  reports this error needs `Repair-WinGetPackageManager` or a fix on the device
-  before the remediation can make progress.
+  The same script passed on 10.0.26200. Running `Repair-WinGetPackageManager -Force
+  -Latest` once in Windows PowerShell 5.1 on the device cleared it; the next runs
+  installed packages. On that device `OpenAI.Codex` still failed to install while
+  the other packages succeeded; Intune does not return remediation output, so the
+  cause has to be read on the device.

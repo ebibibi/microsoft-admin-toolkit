@@ -686,7 +686,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-remediation-winget-user-packages-lab.json"
+        "docs/evidence/intune-remediation-winget-user-packages-lab.json",
+        "docs/evidence/intune-remediation-winget-user-packages-lab-2026-10-28.json"
       ],
       "id": "intune-remediation-winget-user-packages",
       "title": "Intune Remediation: winget user packages",
