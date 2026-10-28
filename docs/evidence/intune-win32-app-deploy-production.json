@@ -1,0 +1,22 @@
+{
+  "entry_id": "intune-win32-app-deploy",
+  "date": "2026-10-28",
+  "scope": "production",
+  "outcome": "success",
+  "artifacts": {
+    "Intune/tools/deploy_win32_app.py": "96892315cd37ab7ea2019cab5406a24e683dd30dc53778bc64df6a17aba476ed",
+    "Intune/Win32Apps/README.md": "fe36591047f5347ac0970c865f3497ed76ba2a63da2d943d954b39beaf7371be",
+    "Intune/Win32Apps/CloudflareOneClient/app.json": "7a81ab09efab8ed3ba2dfaf69af77bc8df9a8962fa70a19576d6e399048daed7",
+    "tests/test_intune_win32_app.py": "cce744275cf4e22178cd0089efaa0929345c352641307ecd58f1db80d64c140b"
+  },
+  "runtime": "Ubuntu 22.04 (Linux 5.15), Python 3.10, cryptography 44.0.3, Microsoft Graph beta (2026-10-28); targets: 2 Windows 11 devices, Entra joined, Intune managed",
+  "procedure": "deploy_win32_app.py Intune/Win32Apps/CloudflareOneClient/app.json --group-id <one-user group> --param ORGANIZATION=<team> --installer-file <MSI verified against the manifest SHA-256>, with a delegated token (DeviceManagementApps.ReadWrite.All, Global Administrator activated through PIM). Install state read afterwards with reports/retrieveDeviceAppInstallationStatusReport (app-only read).",
+  "expected": "win32LobApp created, content committed, publishingState published, required assignment to the group, and both devices report InstallState installed without errors.",
+  "observed": "First run failed on create with 400 'Unknown MinimumSupportedWindowsRelease: 21H2' (nothing created); fixed by using minimumSupportedOperatingSystem. Second run: created, content version 1 committed (60 MB MSI, encrypted 59,538,192 bytes), publishingState published, required assignment present. Within about 1 hour both devices reported InstallState=1 (installed), InstallStateDetail=0, ErrorCode=0.",
+  "limitations": [
+    "Validated with one installer (Cloudflare One Client 26.8.2115.0 MSI) and file-existence detection only.",
+    "Single-file installer folders only; dependencies and supersedence not implemented.",
+    "Upload was a fresh create; the update path (new content version on an existing app) has not been exercised.",
+    "That the ORGANIZATION property pre-fills the team in the client UI is not verified by this record."
+  ]
+}
