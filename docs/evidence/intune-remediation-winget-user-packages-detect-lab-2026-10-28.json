@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-winget-user-packages-detect",
+  "date": "2026-10-28",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/WingetUserPackages/Detect.ps1": "aee12c5fca107229d83411ec496c32f4ad230e61667849f954cb54ae513539f0",
+    "Intune/Remediations/README.md": "ccf72b08fa324b5ab01f3e135a323380cb23abfdeaf3c7e072b54893a2b2c8ef",
+    "tests/test_intune_remediations.py": "b63e8d6b62b863a1dedf9b4e8f7ed7c404f5c09f076373b66bb340a19c2f0176"
+  },
+  "runtime": "Windows 11 Enterprise lab workstation (10.0.26200), Entra-joined and Intune-managed; Windows PowerShell 5.1 64-bit, user context; Microsoft.WinGet.Client from PSGallery (version not recorded).",
+  "procedure": "Script version adding Obsidian.Obsidian assigned through Intune Remediations (hourly) to a group containing only the device owner. Confirmed that the detection and remediation content stored in Intune is byte-identical to the repository files (after BOM/line-ending normalisation). Read deviceRunStates via Microsoft Graph beta with a read-only app.",
+  "expected": "Detection reports installed versions for all four packages, including Obsidian.Obsidian, and exits 0 when none is missing or outdated.",
+  "observed": "2026-10-28T05:10:26Z: detectionState success, remediation skipped; output \"Git.Git=2.56.0.3; Anthropic.ClaudeCode=2.1.302; OpenAI.Codex=0.161.0; Obsidian.Obsidian=1.14.5\".",
+  "limitations": [
+    "One device and one user.",
+    "Intune keeps only the latest run state, so the run that installed Obsidian was not observed; this record covers detection only, not Install-WinGetPackage.",
+    "A second device on a Windows Insider build (10.0.26340), same user and assignment, failed detection with \"Failed to create instance: -2147023174\" (0x800706BA, RPC server unavailable) when Get-WinGetPackage created the WinGet COM object; the cause was not diagnosed. See docs/known-limitations.md."
+  ]
+}

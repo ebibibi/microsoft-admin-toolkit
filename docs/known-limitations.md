@@ -22,3 +22,10 @@ of Get-InactiveADUser.ps1 at commit 786225096078651d0fcbc535136d074b4c500698 fou
 potential mismatch between the initial inactivity filter and the condition guarding
 all-DC verification. Review the current upstream implementation before selecting it;
 do not treat the repository's general quality as proof of every individual script.
+- `Intune/Remediations/WingetUserPackages` uses the Microsoft.WinGet.Client module,
+  which talks to the WinGet COM server. On one Windows Insider build (10.0.26340)
+  detection stopped at `Failed to create instance: -2147023174` (0x800706BA, RPC
+  server unavailable) before any package was checked, so nothing was installed.
+  The same script passed on 10.0.26200. The cause was not diagnosed; a device that
+  reports this error needs `Repair-WinGetPackageManager` or a fix on the device
+  before the remediation can make progress.
