@@ -162,7 +162,9 @@ def build_app_body(app: dict, intunewin_name: str) -> dict:
         "installCommandLine": app["installCommandLine"],
         "uninstallCommandLine": app["uninstallCommandLine"],
         "applicableArchitectures": app.get("architectures", "x64"),
-        "minimumSupportedWindowsRelease": app.get("minimumWindowsRelease", "21H2"),
+        # Graph rejects newer strings such as "21H2" in minimumSupportedWindowsRelease; use the
+        # boolean OS flags instead (v10_1607 = Windows 10 1607 or later, which includes Windows 11)
+        "minimumSupportedOperatingSystem": {app.get("minimumOperatingSystem", "v10_1607"): True},
         "installExperience": {
             "runAsAccount": app.get("runAsAccount", "system"),
             "deviceRestartBehavior": app.get("restartBehavior", "suppress"),
