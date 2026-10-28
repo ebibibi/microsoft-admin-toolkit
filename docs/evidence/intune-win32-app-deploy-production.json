@@ -2,7 +2,7 @@
   "entry_id": "intune-win32-app-deploy",
   "date": "2026-10-28",
   "scope": "production",
-  "outcome": "success",
+  "outcome": "passed",
   "artifacts": {
     "Intune/tools/deploy_win32_app.py": "96892315cd37ab7ea2019cab5406a24e683dd30dc53778bc64df6a17aba476ed",
     "Intune/Win32Apps/README.md": "fe36591047f5347ac0970c865f3497ed76ba2a63da2d943d954b39beaf7371be",
