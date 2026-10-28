@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-remediation-melissa-detect",
+  "date": "2026-10-28",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/MelissaPlayer/Detect.ps1": "ac66ec6383168bb675eed341f7ee8b54c81114db0afc826b7e4372c61ea6bc84",
+    "Intune/Remediations/README.md": "ccf72b08fa324b5ab01f3e135a323380cb23abfdeaf3c7e072b54893a2b2c8ef",
+    "tests/test_intune_remediations.py": "b63e8d6b62b863a1dedf9b4e8f7ed7c404f5c09f076373b66bb340a19c2f0176"
+  },
+  "runtime": "Windows 11 lab workstation, Entra-joined and Intune-managed; Intune Remediations agent, Windows PowerShell 5.1 64-bit, run as SYSTEM.",
+  "procedure": "Assigned through Intune Remediations (hourly) to a group containing only the device owner, sent an on-demand run, then read deviceRunStates and detectedApps via Microsoft Graph beta.",
+  "expected": "detectionState success with the compliant output message.",
+  "observed": "detectionState success, remediationState skipped, output: Melissa 4.5.0 installed. (run reported 2026-10-28T05:10Z). Before the assignment the device inventory listed Melissa 4.0.2.",
+  "limitations": [
+    "One device. The reported run passed detection without running remediation, so the record does not directly show the remediation script succeeded; the earlier 4.0.2 inventory suggests an upgrade happened but the remediation run itself was not captured.",
+    "Device inventory (detectedApps) refreshes slowly and still showed 4.0.2 at the time of the check.",
+    "A second assigned device had not synced since before the assignment."
+  ]
+}

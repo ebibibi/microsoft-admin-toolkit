@@ -767,7 +767,8 @@
       "effect": "read-only",
       "dependencies": [],
       "evidence": [
-        "docs/evidence/intune-remediation-melissa-detect-offline.json"
+        "docs/evidence/intune-remediation-melissa-detect-offline.json",
+        "docs/evidence/intune-remediation-melissa-detect-lab.json"
       ],
       "areas": [
         "intune",
