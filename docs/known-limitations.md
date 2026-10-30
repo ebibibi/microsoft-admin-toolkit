@@ -31,3 +31,20 @@ do not treat the repository's general quality as proof of every individual scrip
   installed packages. On that device `OpenAI.Codex` still failed to install while
   the other packages succeeded; Intune does not return remediation output, so the
   cause has to be read on the device.
+- Intune compliance policy actions through Graph beta (observed 2026-10-30, live
+  tenant, delegated token with an active Global Administrator role): reading the
+  policy with `$expand=scheduledActionsForRule($expand=scheduledActionConfigurations)`
+  works, but GET or PATCH on
+  `deviceCompliancePolicies/{id}/scheduledActionsForRule/...` returns 400 "No method
+  match route template". Change the block grace period with
+  `POST deviceCompliancePolicies/{id}/scheduleActionsForRules` and a
+  `deviceComplianceScheduledActionForRules` array (`ruleName: "PasswordRequired"`,
+  `actionType: "block"`, `gracePeriodHours`). This replaces the rule's action list,
+  so include every action you want to keep, then read the policy back.
+- In `windows10CompliancePolicy`, `deviceThreatProtectionRequiredSecurityLevel` is
+  the highest Defender for Endpoint risk level still treated as compliant. To make
+  "medium or higher" non-compliant, set `low`, not `medium`.
+- Windows Update rings: when a fallback ring targets All devices, exclude the
+  device groups used by the other rings (`exclusionGroupAssignmentTarget`) so that
+  no device receives two rings. Device groups can be excluded from an All devices
+  assignment; user groups cannot.
