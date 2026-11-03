@@ -1,0 +1,21 @@
+{
+  "entry_id": "intune-remediation-nodejs-msi-update",
+  "date": "2026-11-03",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/NodeJsMsiUpdate/Remediate.ps1": "4af575066b76baa9976298295b9e7e6a4e5598da0836c1cfbd8ad4c637d2d482",
+    "Intune/Remediations/NodeJsMsiUpdate/Detect.ps1": "2d5e3e5563a12b92e36f27d5b6e76ef43a54f814f5c906654989e138fa7ba631",
+    "Intune/Remediations/NodeJsMsiUpdate/README.md": "e969a87696d31bd1a4fabd649d72164b3d09e8c527a32d92090d952f9637325f",
+    "tests/test_intune_remediation_nodejs.py": "9de457501bc9c605d74a0d752030f930a3a280b81b3bb0a77931857292a3f4f0"
+  },
+  "runtime": "Two Windows 11 workstations (25H2 build 26200 and an Insider build 26340), Entra-joined and Intune-managed; Intune Remediations agent, Windows PowerShell 5.1 64-bit, run as SYSTEM. Node.js MSI 22.17.1 and 22.18.0 installed before the run; target nodejs.org release v22.23.4 (x64 MSI).",
+  "procedure": "Assigned through Intune Remediations (hourly) to a group containing only the device owner, sent initiateOnDemandProactiveRemediation to both devices, then read deviceRunStates via Microsoft Graph beta and the Defender for Endpoint software evidence (DeviceTvmSoftwareEvidenceBeta) via advanced hunting.",
+  "expected": "Remediation upgrades Node.js to the newest 22.x MSI after hash and signature checks; post-remediation detection is compliant.",
+  "observed": "Device 1: pre-detection 'Node.js 22.17.1 is older than 22.23.4.', remediationState success, post-detection 'Node.js 22.23.4 is the latest 22.x.' Device 2: Defender evidence moved from 22.18.0 (2026-11-02) to 22.23.4 (uninstall registry entry, 2026-11-03), latest run 'Node.js 22.23.4 is the latest 22.x.'",
+  "limitations": [
+    "Two devices, x64 only; the ARM64 branch was not exercised.",
+    "No device had Node.js running a long-lived process during the upgrade; msiexec returned success without a restart request on the device whose run was captured.",
+    "The second device's last reported run is a later compliant detection; its remediation run was not captured in deviceRunStates, but Defender evidence shows the MSI version change from 22.18.0 to 22.23.4."
+  ]
+}
