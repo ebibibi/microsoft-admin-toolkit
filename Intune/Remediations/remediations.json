@@ -29,6 +29,12 @@
       "displayName": "Apps - Melissa (music practice player)",
       "description": "Installs Melissa 4.5.0 for all users from the upstream GitHub release, verified by pinned SHA-256 (installer is unsigned).",
       "runAsAccount": "system"
+    },
+    {
+      "folder": "NodeJsMsiUpdate",
+      "displayName": "Apps - Node.js LTS keep updated (MSI)",
+      "description": "If Node.js (MSI) is installed, keeps it on the latest release of the same major line from nodejs.org, verified by SHASUMS256 and the OpenJS Foundation signature. Does not install Node.js where absent.",
+      "runAsAccount": "system"
     }
   ]
 }

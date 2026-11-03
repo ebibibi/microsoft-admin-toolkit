@@ -823,6 +823,68 @@
       "dependencies": [
         "Intune/Win32Apps/CloudflareOneClient/app.json"
       ]
+    },
+    {
+      "id": "intune-remediation-nodejs-msi-update",
+      "title": "Intune Remediation: keep Node.js (MSI) on the latest release of its major line",
+      "summary": "Upgrade an existing Node.js MSI install within its major line, verified by SHASUMS256 and the OpenJS Foundation signature",
+      "path": "Intune/Remediations/NodeJsMsiUpdate/Remediate.ps1",
+      "effect": "changes-state",
+      "dependencies": [
+        "Intune/Remediations/NodeJsMsiUpdate/Detect.ps1"
+      ],
+      "evidence": [
+        "docs/evidence/intune-remediation-nodejs-msi-update-lab.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "nodejs",
+        "msi",
+        "remediation",
+        "patching",
+        "vulnerability"
+      ],
+      "runbook": "Intune/Remediations/NodeJsMsiUpdate/README.md",
+      "status": "verified",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediation_nodejs.py"
+      ],
+      "sources": []
+    },
+    {
+      "id": "intune-remediation-nodejs-msi-update-detect",
+      "title": "Intune Remediation: keep Node.js (MSI) updated (detection)",
+      "summary": "Report non-compliant when a newer Node.js release exists in the installed major line",
+      "path": "Intune/Remediations/NodeJsMsiUpdate/Detect.ps1",
+      "effect": "read-only",
+      "dependencies": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-nodejs-msi-update-detect-lab.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "nodejs",
+        "msi",
+        "remediation",
+        "patching",
+        "vulnerability"
+      ],
+      "runbook": "Intune/Remediations/NodeJsMsiUpdate/README.md",
+      "status": "verified",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediation_nodejs.py"
+      ],
+      "sources": []
     }
   ]
 }
