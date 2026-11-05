@@ -35,6 +35,12 @@
       "displayName": "Apps - Node.js LTS keep updated (MSI)",
       "description": "If Node.js (MSI) is installed, keeps it on the latest release of the same major line from nodejs.org, verified by SHASUMS256 and the OpenJS Foundation signature. Does not install Node.js where absent.",
       "runAsAccount": "system"
+    },
+    {
+      "folder": "KeePassXCUpdate",
+      "displayName": "Apps - KeePassXC keep updated",
+      "description": "Installs KeePassXC and keeps it on the newest upstream release after a 3-day soak, verified by SHA-256 and the publisher signature. Never closes a running app: the update then waits for the next restart. Needs the VC++ runtime.",
+      "runAsAccount": "system"
     }
   ]
 }

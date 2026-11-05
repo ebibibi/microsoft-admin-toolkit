@@ -1,0 +1,19 @@
+{
+  "entry_id": "intune-remediation-keepassxc-update-detect",
+  "date": "2026-11-05",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/KeePassXCUpdate/Detect.ps1": "52f0095672c15bea2ba89075f302cfef5b5b8cd87a12b134bd9561c835347081",
+    "Intune/Remediations/KeePassXCUpdate/README.md": "2e574ba80114b30c00beb94844bc2063ec34800e19203811bcfdcecabec8ec96",
+    "tests/test_intune_remediation_keepassxc.py": "706a27e2e41e2ef5a31af9bb13828ee5b93bc085b1e3f443453b0048d8bf91d5"
+  },
+  "runtime": "Disposable Hyper-V VM from a Windows 11 Enterprise Evaluation image, x64, NAT network; Windows PowerShell 5.1, 64-bit, run as SYSTEM through a scheduled task to match the Remediations context (the Intune agent itself was not involved); Visual C++ 2015-2022 x64 14.44.35211 installed with the VCRedistX64 remediation; KeePassXC 2.7.12 MSI as the starting version; upstream target 2.8.0.",
+  "procedure": "Ran Detect.ps1 as SYSTEM with KeePassXC absent, 2.7.12 installed, and 2.8.0 installed, recording the output and exit code.",
+  "expected": "Exit 1 when absent or older, exit 0 when current.",
+  "observed": "Absent: exit 1 'KeePassXC not installed (target 2.8.0).' 2.7.12: exit 1 'KeePassXC 2.7.12 is older than 2.8.0.' 2.8.0: exit 0 'KeePassXC 2.8.0 is current (newest eligible 2.8.0).'",
+  "limitations": [
+    "Run as SYSTEM through a scheduled task, not through the Intune Management Extension. No Intune-managed device was covered by this record.",
+    "x64 only; the ARM64 branch has offline tests only."
+  ]
+}

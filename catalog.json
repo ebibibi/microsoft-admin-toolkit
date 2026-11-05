@@ -885,6 +885,68 @@
         "tests/test_intune_remediation_nodejs.py"
       ],
       "sources": []
+    },
+    {
+      "id": "intune-remediation-keepassxc-update",
+      "title": "Intune Remediation: install KeePassXC and keep it on the latest upstream release",
+      "summary": "Install or upgrade KeePassXC from upstream GitHub releases after a soak period, verified by digest and signer, deferring to the next restart while the app is open",
+      "path": "Intune/Remediations/KeePassXCUpdate/Remediate.ps1",
+      "effect": "changes-state",
+      "dependencies": [
+        "Intune/Remediations/KeePassXCUpdate/Detect.ps1"
+      ],
+      "evidence": [
+        "docs/evidence/intune-remediation-keepassxc-update-lab.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keepassxc",
+        "msi",
+        "remediation",
+        "patching",
+        "password-manager"
+      ],
+      "runbook": "Intune/Remediations/KeePassXCUpdate/README.md",
+      "status": "verified",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediation_keepassxc.py"
+      ],
+      "sources": []
+    },
+    {
+      "id": "intune-remediation-keepassxc-update-detect",
+      "title": "Intune Remediation: keep KeePassXC updated (detection)",
+      "summary": "Report non-compliant when KeePassXC is missing or older than the newest eligible upstream release",
+      "path": "Intune/Remediations/KeePassXCUpdate/Detect.ps1",
+      "effect": "read-only",
+      "dependencies": [],
+      "evidence": [
+        "docs/evidence/intune-remediation-keepassxc-update-detect-lab.json"
+      ],
+      "areas": [
+        "intune",
+        "windows",
+        "endpoint"
+      ],
+      "tags": [
+        "keepassxc",
+        "msi",
+        "remediation",
+        "patching",
+        "password-manager"
+      ],
+      "runbook": "Intune/Remediations/KeePassXCUpdate/README.md",
+      "status": "verified",
+      "permissions": "Deployed through Intune Remediations; runs on the device as SYSTEM.",
+      "tests": [
+        "tests/test_intune_remediation_keepassxc.py"
+      ],
+      "sources": []
     }
   ]
 }
