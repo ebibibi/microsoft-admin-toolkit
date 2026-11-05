@@ -1,0 +1,23 @@
+{
+  "entry_id": "intune-remediation-keepassxc-update",
+  "date": "2026-11-05",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/KeePassXCUpdate/Remediate.ps1": "aaaf3694c6d009567ba12b8089794af9ef0903842bced0329c869bd3cedcf7a7",
+    "Intune/Remediations/KeePassXCUpdate/README.md": "2e574ba80114b30c00beb94844bc2063ec34800e19203811bcfdcecabec8ec96",
+    "Intune/Remediations/KeePassXCUpdate/Detect.ps1": "52f0095672c15bea2ba89075f302cfef5b5b8cd87a12b134bd9561c835347081",
+    "tests/test_intune_remediation_keepassxc.py": "706a27e2e41e2ef5a31af9bb13828ee5b93bc085b1e3f443453b0048d8bf91d5"
+  },
+  "runtime": "Disposable Hyper-V VM from a Windows 11 Enterprise Evaluation image, x64, NAT network; Windows PowerShell 5.1, 64-bit, run as SYSTEM through a scheduled task to match the Remediations context (the Intune agent itself was not involved); Visual C++ 2015-2022 x64 14.44.35211 installed with the VCRedistX64 remediation; KeePassXC 2.7.12 MSI as the starting version; upstream target 2.8.0.",
+  "procedure": "Ran Remediate.ps1 as SYSTEM in these cases: (1) 2.7.12 installed, app closed; (2) app absent, VC++ runtime absent; (3) app absent, VC++ runtime present; (4) 2.7.12 running, then a second run, then a VM restart; (5) a different valid MSI placed under the staged file name while the app ran; (6) a copy of the script with a wrong expected digest; (7) a copy with a wrong expected signer. Read the uninstall registry entry, keepassxc-cli --version, the MsiInstaller events, the scheduled task and the work folder after each case.",
+  "expected": "Upgrades or installs when the app is closed; refuses without the runtime; never touches a running app and installs at the next restart, then removes the task and MSI; replaces a bad staged file; refuses a wrong digest or signer without installing.",
+  "observed": "(1) '2.7.12 -> 2.8.0 (msiexec 0)'; work folder ACL had only SYSTEM and Administrators, MSI removed. (2) exit 1 'Visual C++ runtime missing (...)', nothing installed. (3) ' -> 2.8.0 (msiexec 0)', keepassxc-cli reported 2.8.0. (4) 'KeePassXC is open: 2.8.0 is checked and will install at the next restart', same app PID before and after, version stayed 2.7.12, task Ready as SYSTEM with disallowOnBattery False; the second run did not re-download (same MSI timestamp). After the restart MsiInstaller logged 2.8.0 installed 27 seconds after boot, keepassxc-cli reported 2.8.0, the task and the MSI were gone. (5) staged file replaced; its SHA-256 matched the upstream 2.8.0 digest. (6) exit 1 'SHA-256 mismatch', version stayed 2.7.12. (7) exit 1 'Signature check failed', version stayed 2.7.12.",
+  "limitations": [
+    "Run as SYSTEM through a scheduled task, not through the Intune Management Extension. No Intune-managed device was covered by this record.",
+    "x64 only; the ARM64 branch has offline tests only.",
+    "KeePassXC ran in session 0 for the running-app case, without an open database or a browser extension; keepassxc-proxy was not exercised as a live process.",
+    "The restart case used a VM restart; Fast Startup shutdown behaviour was not tested.",
+    "Moving a device off an assigned Store app was not tested: the VM had no Intune assignment."
+  ]
+}
