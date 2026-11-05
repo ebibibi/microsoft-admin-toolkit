@@ -947,6 +947,33 @@
         "tests/test_intune_remediation_keepassxc.py"
       ],
       "sources": []
+    },
+    {
+      "id": "system-saved-credential",
+      "title": "SystemSavedCredential",
+      "summary": "Lists domain credentials saved in the SYSTEM vault and flags those pointing to a DC; explicit delete helper",
+      "areas": [
+        "windows",
+        "active-directory"
+      ],
+      "tags": [
+        "hybrid-join",
+        "cmdkey",
+        "credential-manager",
+        "0x80070005",
+        "userCertificate"
+      ],
+      "path": "ActiveDirectory/SYSTEM保存資格情報の確認/SystemSavedCredential.ps1",
+      "runbook": "ActiveDirectory/SYSTEM保存資格情報の確認/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Local administrator on the device. Creates and removes a temporary SYSTEM scheduled task; listing changes no credential, deletion happens only through Remove-SystemSavedCredential.",
+      "dependencies": [],
+      "tests": [],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/system-saved-credential-lab.json"
+      ]
     }
   ]
 }
