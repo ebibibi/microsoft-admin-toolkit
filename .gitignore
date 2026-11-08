@@ -6,3 +6,6 @@ CLAUDE.md
 __pycache__/
 .ruff_cache/
 *.pyc
+
+# Claude Code per-user permissions (may contain approved commands verbatim)
+**/.claude/settings.local.json
