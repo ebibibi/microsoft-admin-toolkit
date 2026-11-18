@@ -1,0 +1,19 @@
+{
+  "entry_id": "intune-targeted-exposure-baseline",
+  "date": "2026-11-18",
+  "scope": "offline",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/TargetedExposureBaseline/Invoke-Baseline.ps1": "37704f46c48e4432e0b530ad8bfdb064eba9756f1cdada63bd7ae3d979f9c077",
+    "Intune/Remediations/TargetedExposureBaseline/README.md": "1a0a7e2994af44b36f86c7f9d6458ce765c725606d9f6621e14feef696b9f1df",
+    "tests/test_targeted_exposure_baseline.py": "2cc3b64c4b48ba749beb9d8f8ec73a035a6ce205f05c8f6daf27c637cf005a67"
+  },
+  "runtime": "Ubuntu Linux; Python 3.10.12; PowerShell 7.7.0",
+  "procedure": "PowerShell Parser.ParseFile; python3 -m unittest discover -s tests -v; python3 tools/toolkit.py validate.",
+  "expected": "PowerShell parses; wrong device and non-Windows execution abort before registry access; repository checks pass.",
+  "observed": "PowerShell parse passed. All 63 Python tests passed, including two executable target/platform guard checks. Catalog validation passed with pre-existing historical-evidence warnings.",
+  "limitations": [
+    "No Windows registry execution, rollback, application update, or TVM score reduction was established by these offline tests.",
+    "An on-demand Intune request was accepted separately; actual device results remain pending."
+  ]
+}

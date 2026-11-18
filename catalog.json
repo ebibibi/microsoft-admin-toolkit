@@ -974,6 +974,34 @@
       "evidence": [
         "docs/evidence/system-saved-credential-lab.json"
       ]
+    },
+    {
+      "id": "intune-targeted-exposure-baseline",
+      "title": "Targeted reversible endpoint exposure baseline",
+      "summary": "Apply five registry values addressing four low-impact exposure recommendations on one explicitly named Windows device",
+      "areas": [
+        "intune",
+        "windows",
+        "security"
+      ],
+      "tags": [
+        "remediation",
+        "vulnerability",
+        "exposure"
+      ],
+      "path": "Intune/Remediations/TargetedExposureBaseline/Invoke-Baseline.ps1",
+      "runbook": "Intune/Remediations/TargetedExposureBaseline/README.md",
+      "effect": "changes-state",
+      "status": "experimental",
+      "permissions": "Intune Remediations; SYSTEM on an explicitly verified single target device. Graph deployment permissions are independent.",
+      "dependencies": [],
+      "tests": [
+        "tests/test_targeted_exposure_baseline.py"
+      ],
+      "sources": [],
+      "evidence": [
+        "docs/evidence/intune-targeted-exposure-baseline-offline.json"
+      ]
     }
   ]
 }
