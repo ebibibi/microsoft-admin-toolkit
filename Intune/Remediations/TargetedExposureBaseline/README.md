@@ -8,6 +8,11 @@ saved before changes to `%ProgramData%\TargetedExposureBaseline\original-values.
 Retries preserve that first backup. Restore those values (or remove originally
 absent values) to undo the change. Empty registry keys may remain after rollback.
 
+Detection names drifted values and adds read-only diagnostics: the same values in
+the Office Click-to-Run virtual registry (`c2rValues`, in setting order, `-` = absent),
+domain membership, backup presence and the last line of
+`%ProgramData%\TargetedExposureBaseline\run.log`, which remediation appends to.
+
 This does not fix software CVEs, trigger an Office update, or prove that an update
 succeeded. Detection also reports relevant machine installer versions and whether
 selected applications are running. Missing installer entries are not proof that
@@ -33,6 +38,6 @@ separate compatibility/availability assessment.
 Sources: Microsoft Graph [on-demand remediation](https://learn.microsoft.com/graph/api/intune-devices-manageddevice-initiateondemandproactiveremediation?view=graph-rest-beta)
 and the device's `DeviceTvmSecureConfigurationAssessmentKB.RemediationOptions`.
 The registry settings were transcribed from that service knowledge base, not
-copied from an external implementation. Status: verified on one Windows 11 device
+copied from an external implementation. Status: experimental after diagnostic changes; previously verified on one Windows 11 device
 (Windows PowerShell 5.1, Intune Remediations); rollback and TVM reassessment were not
 exercised. See `docs/evidence/intune-targeted-exposure-baseline-lab.json`.
