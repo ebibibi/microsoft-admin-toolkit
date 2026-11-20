@@ -33,5 +33,6 @@ separate compatibility/availability assessment.
 Sources: Microsoft Graph [on-demand remediation](https://learn.microsoft.com/graph/api/intune-devices-manageddevice-initiateondemandproactiveremediation?view=graph-rest-beta)
 and the device's `DeviceTvmSecureConfigurationAssessmentKB.RemediationOptions`.
 The registry settings were transcribed from that service knowledge base, not
-copied from an external implementation. Status: experimental until actual
-Windows execution has been observed.
+copied from an external implementation. Status: verified on one Windows 11 device
+(Windows PowerShell 5.1, Intune Remediations); rollback and TVM reassessment were not
+exercised. See `docs/evidence/intune-targeted-exposure-baseline-lab.json`.

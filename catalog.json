@@ -992,7 +992,7 @@
       "path": "Intune/Remediations/TargetedExposureBaseline/Invoke-Baseline.ps1",
       "runbook": "Intune/Remediations/TargetedExposureBaseline/README.md",
       "effect": "changes-state",
-      "status": "experimental",
+      "status": "verified",
       "permissions": "Intune Remediations; SYSTEM on an explicitly verified single target device. Graph deployment permissions are independent.",
       "dependencies": [],
       "tests": [
@@ -1000,7 +1000,8 @@
       ],
       "sources": [],
       "evidence": [
-        "docs/evidence/intune-targeted-exposure-baseline-offline.json"
+        "docs/evidence/intune-targeted-exposure-baseline-offline.json",
+        "docs/evidence/intune-targeted-exposure-baseline-lab.json"
       ]
     }
   ]
