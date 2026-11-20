@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-targeted-exposure-baseline",
+  "date": "2026-11-20",
+  "scope": "lab",
+  "outcome": "passed",
+  "artifacts": {
+    "Intune/Remediations/TargetedExposureBaseline/Invoke-Baseline.ps1": "c5f29d5b76fdce8525b8eadad32067e4964a84ca849863b8a790e759507e0ca3",
+    "Intune/Remediations/TargetedExposureBaseline/README.md": "328d346c041e79a7985d930eb83c2d07beeba0e25302e34a22e25d8e6e134ab1",
+    "tests/test_targeted_exposure_baseline.py": "eba31632cec9560fe6e8bf4f20435cb0fc4e259a411e73869c222b743a671464"
+  },
+  "runtime": "Windows 11 Insider build 26340 desktop; Windows PowerShell 5.1.26100 64-bit as SYSTEM; Intune Remediations (hourly schedule, single-device static group).",
+  "procedure": "Deployed a private copy wrapping this script as '& { <script> } -ExpectedComputerName <target> -Mode Detect|Remediate'. Read back both bodies (byte-equal to this checkout) and the one-member assignment group. Read deviceRunStates for the script after the run.",
+  "expected": "Pre-remediation detection reports drift and exits 1; remediation saves original values, writes five DWORDs and exits 0; post-remediation detection reports baselineDrift=0.",
+  "observed": "Pre-remediation detection: baselineDrift=5, error output empty. Remediation state: success, remediation error output empty. Post-remediation detection: baselineDrift=0, error output empty. The previous script version failed on the same device with scriptError because Windows PowerShell 5.1 counted the JSON backup array as one element (fixed in #54).",
+  "limitations": [
+    "Rollback from original-values.json was not exercised.",
+    "Defender Vulnerability Management reassessment and exposure-level change were not yet observed when this record was written.",
+    "One device only; no Office installation-specific behaviour (Click-to-Run update channel) was verified beyond registry values."
+  ]
+}
