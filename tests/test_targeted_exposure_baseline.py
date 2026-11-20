@@ -34,3 +34,22 @@ class TargetGuardTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertEqual(result.stdout.strip(), '64-bit Windows PowerShell is required.')
         self.assertEqual(result.stderr, '')
+
+
+class WindowsPowerShell51PatternTests(unittest.TestCase):
+    """Static checks for 5.1-specific pitfalls that pwsh 7 cannot reproduce."""
+
+    def setUp(self) -> None:
+        self.text = SCRIPT.read_text(encoding='utf-8-sig')
+
+    def test_backup_array_is_enumerated_before_counting(self) -> None:
+        self.assertIn('ConvertFrom-Json | ForEach-Object { $_ })', self.text)
+        self.assertNotRegex(self.text, r'@\([^)]*ConvertFrom-Json\)')
+
+    def test_existing_registry_keys_are_not_recreated(self) -> None:
+        for line in self.text.splitlines():
+            if 'New-Item -Path $s.Path' in line:
+                self.assertIn('if (-not (Test-Path -LiteralPath $s.Path))', line)
+
+    def test_failure_is_reported_on_stderr(self) -> None:
+        self.assertIn('[Console]::Error.WriteLine($message)', self.text)
