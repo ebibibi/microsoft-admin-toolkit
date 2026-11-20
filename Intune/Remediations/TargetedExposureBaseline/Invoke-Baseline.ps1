@@ -61,12 +61,14 @@ try {
     New-Item -ItemType Directory -Path $dir -Force | Out-Null
     # Keep the first backup across retries; never overwrite the original values.
     if (-not (Test-Path -LiteralPath $backupFile)) {
-        $original | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $backupFile -Encoding UTF8
+        ConvertTo-Json -InputObject $original -Depth 5 | Set-Content -LiteralPath $backupFile -Encoding UTF8
     }
-    $verifiedBackup = @(Get-Content -LiteralPath $backupFile -Raw | ConvertFrom-Json)
+    # Windows PowerShell 5.1 emits a JSON array as one object; enumerate it explicitly.
+    $verifiedBackup = @(Get-Content -LiteralPath $backupFile -Raw | ConvertFrom-Json | ForEach-Object { $_ })
     if ($verifiedBackup.Count -ne $settings.Count) { throw 'Original-value backup is incomplete.' }
     foreach ($s in $drift) {
-        New-Item -Path $s.Path -Force | Out-Null
+        # New-Item -Force on an existing registry key recreates it and drops sibling values.
+        if (-not (Test-Path -LiteralPath $s.Path)) { New-Item -Path $s.Path -Force | Out-Null }
         New-ItemProperty -LiteralPath $s.Path -Name $s.Name -PropertyType DWord -Value $s.Value -Force | Out-Null
         $actual = Get-ItemPropertyValue -LiteralPath $s.Path -Name $s.Name
         if ($actual -ne $s.Value) { throw "Readback failed for $($s.Name)" }
@@ -75,6 +77,9 @@ try {
     exit 0
 }
 catch {
-    Write-Output "Baseline failed: $($_.Exception.Message)"
+    $message = "Baseline failed: $($_.Exception.Message)"
+    Write-Output $message
+    # Intune returns only stderr for remediation scripts.
+    [Console]::Error.WriteLine($message)
     exit 1
 }
