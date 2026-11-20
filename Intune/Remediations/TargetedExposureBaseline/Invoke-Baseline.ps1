@@ -32,6 +32,15 @@ $settings = @(
 )
 $dir = Join-Path $env:ProgramData 'TargetedExposureBaseline'
 $backupFile = Join-Path $dir 'original-values.json'
+$logFile = Join-Path $dir 'run.log'
+function Write-RunLog([string]$Text) {
+    # Intune does not return remediation stdout; keep a short local trail. Never fail on logging.
+    try {
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+        Add-Content -LiteralPath $logFile -Value ("{0:u} {1}" -f (Get-Date).ToUniversalTime(), $Text) -Encoding UTF8
+    } catch { }
+}
+function Get-SettingLabel($Setting) { "$(Split-Path -Leaf $Setting.Path)\$($Setting.Name)" }
 try {
     $drift = @()
     $original = @()
@@ -53,11 +62,27 @@ try {
         $busy = @(Get-Process -Name Resolve,Obsidian,'Docker Desktop',vlc -ErrorAction SilentlyContinue |
             Select-Object -ExpandProperty ProcessName -Unique)
         $winget = @(Get-ChildItem 'C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_*_x64__8wekyb3d8bbwe\winget.exe' -ErrorAction SilentlyContinue)
-        Write-Output ("baselineDrift=$($drift.Count); apps=" + ($apps -join ',') + '; busy=' + ($busy -join ',') + "; wingetFound=$($winget.Count -gt 0); PS=$($PSVersionTable.PSVersion)")
+        # Read-only diagnostics: Click-to-Run Office keeps a virtual copy of HKLM\SOFTWARE.
+        $c2rRoot = 'HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\REGISTRY\MACHINE\'
+        $c2r = @(foreach ($s in $settings) {
+            $vPath = $c2rRoot + ($s.Path -replace '^HKLM:\\', '')
+            $vItem = Get-ItemProperty -LiteralPath $vPath -ErrorAction SilentlyContinue
+            $v = if ($null -ne $vItem) { $vItem.PSObject.Properties[$s.Name] } else { $null }
+            # Same order as $settings; '-' means absent.
+            $(if ($null -ne $v) { "$($v.Value)" } else { '-' })
+        })
+        $c2rVersion = (Get-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Office\ClickToRun\Configuration' -ErrorAction SilentlyContinue).VersionToReport
+        $partOfDomain = (Get-CimInstance -ClassName Win32_ComputerSystem -ErrorAction SilentlyContinue).PartOfDomain
+        $lastLog = if (Test-Path -LiteralPath $logFile) { (Get-Content -LiteralPath $logFile -Tail 1) } else { '-' }
+        Write-Output ("baselineDrift=$($drift.Count); drifted=" + (($drift | ForEach-Object { Get-SettingLabel $_ }) -join ',') +
+            "; c2r=$c2rVersion; c2rValues=" + ($c2r -join ',') + "; domain=$partOfDomain; backup=$(Test-Path -LiteralPath $backupFile); lastRun=$lastLog" +
+            # Keep one line; Intune truncates long output, so the inventory goes last.
+            "; apps=" + ($apps -join ',') + '; busy=' + ($busy -join ',') + "; wingetFound=$($winget.Count -gt 0); PS=$($PSVersionTable.PSVersion)")
         if ($drift.Count -gt 0) { exit 1 }
         exit 0
     }
-    if ($drift.Count -eq 0) { Write-Output 'Baseline already compliant.'; exit 0 }
+    if ($drift.Count -eq 0) { Write-RunLog 'Remediate: already compliant'; Write-Output 'Baseline already compliant.'; exit 0 }
+    Write-RunLog ('Remediate: start drifted=' + (($drift | ForEach-Object { Get-SettingLabel $_ }) -join ','))
     New-Item -ItemType Directory -Path $dir -Force | Out-Null
     # Keep the first backup across retries; never overwrite the original values.
     if (-not (Test-Path -LiteralPath $backupFile)) {
@@ -73,11 +98,13 @@ try {
         $actual = Get-ItemPropertyValue -LiteralPath $s.Path -Name $s.Name
         if ($actual -ne $s.Value) { throw "Readback failed for $($s.Name)" }
     }
+    Write-RunLog "Remediate: applied $($drift.Count)"
     Write-Output "Applied $($drift.Count) registry values; original values saved to $backupFile; no restart requested."
     exit 0
 }
 catch {
     $message = "Baseline failed: $($_.Exception.Message)"
+    Write-RunLog $message
     Write-Output $message
     # Intune returns only stderr for remediation scripts.
     [Console]::Error.WriteLine($message)

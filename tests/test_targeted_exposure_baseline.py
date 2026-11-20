@@ -53,3 +53,18 @@ class WindowsPowerShell51PatternTests(unittest.TestCase):
 
     def test_failure_is_reported_on_stderr(self) -> None:
         self.assertIn('[Console]::Error.WriteLine($message)', self.text)
+
+
+class DiagnosticOutputTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.text = SCRIPT.read_text(encoding='utf-8-sig')
+
+    def test_detection_names_drifted_values_before_app_inventory(self) -> None:
+        self.assertLess(self.text.index('drifted='), self.text.index('"; apps="'))
+
+    def test_remediation_writes_local_run_log(self) -> None:
+        self.assertIn("Write-RunLog 'Remediate: already compliant'", self.text)
+        self.assertIn('Write-RunLog $message', self.text)
+
+    def test_guard_runs_before_logging_helpers_touch_disk(self) -> None:
+        self.assertLess(self.text.index('Target guard failed'), self.text.index('Add-Content'))
