@@ -1001,7 +1001,8 @@
       "sources": [],
       "evidence": [
         "docs/evidence/intune-targeted-exposure-baseline-offline.json",
-        "docs/evidence/intune-targeted-exposure-baseline-lab.json"
+        "docs/evidence/intune-targeted-exposure-baseline-lab.json",
+        "docs/evidence/intune-targeted-exposure-baseline-lab-2.json"
       ]
     }
   ]

@@ -1,0 +1,20 @@
+{
+  "entry_id": "intune-targeted-exposure-baseline",
+  "date": "2026-11-22",
+  "scope": "lab",
+  "outcome": "inconclusive",
+  "artifacts": {
+    "Intune/Remediations/TargetedExposureBaseline/Invoke-Baseline.ps1": "b0c82f01f7db0ed968a9a0ea2597d4b149089bc0d3a207eb2ed3d898b3ad0680",
+    "Intune/Remediations/TargetedExposureBaseline/README.md": "6b1a0f8219af969b2a073db54c37fe527216bef0932254f185c0d5b0a110a4d3",
+    "tests/test_targeted_exposure_baseline.py": "7f1f983e6184ec13d63f0350b07d6c7136fda69310bc7aa9daedda36079a9816"
+  },
+  "runtime": "Windows 11 Insider build 26340; Windows PowerShell 5.1.26100 64-bit as SYSTEM; Intune Remediations hourly; Microsoft 365 Apps Click-to-Run 16.0.20527.20196; not domain-joined.",
+  "procedure": "Deployed the diagnostic version byte-equal to this checkout (read back). Read deviceRunStates over two days; correlated drift with Defender advanced hunting DeviceProcessEvents for OfficeC2RClient.exe and DeviceTvmSecureConfigurationAssessment.",
+  "expected": "Values stay applied after remediation; Defender marks the four recommendations compliant.",
+  "observed": "Remediation succeeded each time (post-detection drift 0). Later detections reported drifted={D27CDB6E...}\\\\activationfilteroverride,{D27CDB70...}\\\\activationfilteroverride only, each after an OfficeC2RClient /installupdatesdx run. Click-to-Run virtual registry held none of the five values. Defender assessment 2026-11-21T13:37Z: network-location elevation and both Office update recommendations compliant; Flash activation non-compliant.",
+  "limitations": [
+    "Registry write events for these keys were not present in Defender telemetry, so the updater is inferred from timing, not observed writing the key.",
+    "One device only; rollback not exercised.",
+    "Whether a version-independent Flash policy satisfies the Defender check was not tested."
+  ]
+}
