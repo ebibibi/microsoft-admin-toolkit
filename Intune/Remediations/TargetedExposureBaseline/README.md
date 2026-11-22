@@ -13,6 +13,16 @@ the Office Click-to-Run virtual registry (`c2rValues`, in setting order, `-` = a
 domain membership, backup presence and the last line of
 `%ProgramData%\TargetedExposureBaseline\run.log`, which remediation appends to.
 
+Known limitation (observed on one device, Microsoft 365 Apps Click-to-Run
+16.0.20527): Office updates (`OfficeC2RClient.exe /installupdatesdx`) removed the two
+`activationfilteroverride` values under `...\Office\16.0\Common\COM Compatibility`
+within about 20 minutes, three times. The three policy values stayed, and Defender
+Vulnerability Management marked their recommendations compliant; the Flash
+recommendation stayed non-compliant. On Click-to-Run Office, re-running this package
+only restores the Flash values until the next update. Treat that recommendation
+separately (for example a documented exception, or a version-independent policy
+after its own validation) instead of leaving an hourly schedule running.
+
 This does not fix software CVEs, trigger an Office update, or prove that an update
 succeeded. Detection also reports relevant machine installer versions and whether
 selected applications are running. Missing installer entries are not proof that
